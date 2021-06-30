@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_defence_state"
+        android:icon="@drawable/ic_defence"
+        android:title="@string/defence_state_label" />
+
+    <item
+        android:id="@+id/navigation_power_information"
+        android:icon="@drawable/ic_used_power"
+        android:title="@string/power_state_label" />
+
+    <item
+        android:id="@+id/navigation_accruals"
+        android:icon="@drawable/ic_baseline_playlist_play_24"
+        android:title="@string/accruals_label" />
+
+    <item
+        android:id="@+id/navigation_bills"
+        android:icon="@drawable/ic_baseline_sticky_note_2_24"
+        android:title="@string/bills_label" />
+
+    <item
+        android:id="@+id/navigation_preferences"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/preferences_label" />
+
+</menu>

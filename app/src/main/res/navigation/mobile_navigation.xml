@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_defence_state">
+
+    <fragment
+        android:id="@+id/navigation_defence_state"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.DefenceStateFragment"
+        android:label="@string/defence_state_label"
+        tools:layout="@layout/fragment_defence" />
+
+    <fragment
+        android:id="@+id/navigation_power_information"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.PowerFragment"
+        android:label="@string/power_state_label"
+        tools:layout="@layout/fragment_power" />
+    <fragment
+        android:id="@+id/navigation_accruals"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsFragment"
+        android:label="@string/accruals_label"
+        tools:layout="@layout/fragment_accruals" >
+        <action
+            android:id="@+id/action_show_power_accruals"
+            app:destination="@id/navigation_accruals_power" />
+        <action
+            android:id="@+id/action_show_membership_accruals"
+            app:destination="@id/navigation_accruals_membership" />
+        <action
+            android:id="@+id/action_show_target_accruals"
+            app:destination="@id/navigation_accruals_target" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_accruals_power"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsPowerFragment"
+        android:label="@string/accruals_power_label"
+        tools:layout="@layout/fragment_power_list" >
+        <action
+            android:id="@+id/action_show_power_details"
+            app:destination="@id/navigation_accruals_power_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_accruals_membership"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsMembershipFragment"
+        android:label="@string/accruals_membership_label"
+        tools:layout="@layout/fragment_membership_list" >
+        <action
+            android:id="@+id/action_show_membership_details"
+            app:destination="@id/navigation_accruals_membership_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_accruals_target"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsTargetFragment"
+        android:label="@string/accruals_target_label"
+        tools:layout="@layout/fragment_target_list" >
+        <action
+            android:id="@+id/action_show_target_details"
+            app:destination="@id/navigation_accruals_target_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_accruals_power_details"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsPowerDetailsFragment"
+        android:label="@string/accruals_power_details_label"
+        tools:layout="@layout/fragment_power_details" />
+    <fragment
+        android:id="@+id/navigation_accruals_membership_details"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsMembershipDetailsFragment"
+        android:label="@string/accruals_membership_details_label"
+        tools:layout="@layout/fragment_membership_details" />
+    <fragment
+        android:id="@+id/navigation_accruals_target_details"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.AccrualsTargetDetailsFragment"
+        android:label="@string/accruals_target_details_label"
+        tools:layout="@layout/fragment_target_details" />
+    <fragment
+        android:id="@+id/navigation_bills"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.BillsFragment"
+        android:label="@string/bills_label"
+        tools:layout="@layout/fragment_bills" />
+    <fragment
+        android:id="@+id/navigation_preferences"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.PreferencesFragment"
+        android:label="@string/preferences_label" />
+</navigation>

@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">Oblepiha_kotlin</string>
+    <string name="checker_channel_description">Checker channel</string>
+    <string name="defence_state_change_channel_description">Defence state channel</string>
+    <string name="alert_received_channel_description">Received alerts</string>
+    <string name="defence_disabled">Defence is disabled</string>
+    <string name="defence_enabled">Defence is enabled</string>
+    <string name="defence_state_changed_title">Defence state changed</string>
+    <string name="alert_accepted_message">Accept</string>
+    <string name="call_security_message">Call security</string>
+    <string name="test_message" translatable="false">test</string>
+    <string name="alert_icon_desc" translatable="false">alert icon</string>
+    <string name="title_activity_content">MainActivity</string>
+    <string name="defence_state_label">Defence</string>
+    <string name="power_state_label">Power</string>
+    <string name="preferences_label">Preferences</string>
+    <string name="login_label">Login</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">pass</string>
+    <string name="action_sign_in">Log in</string>
+    <string name="login_hint">Your login</string>
+    <string name="password_hint">Your password</string>
+    <string name="log_in_btn_text">Log in</string>
+    <string name="login_required_message">Login required!</string>
+    <string name="pass_required_message">Password required!</string>
+    <string name="login_error_message">Can\'t login, try again</string>
+    <string name="disable_dose_dialog_title">Disable Dose</string>
+    <string name="disable_dose_dialog_message">For correct app use, please, disable dose mode</string>
+    <string name="logout_btn">Logout button</string>
+    <string name="logout_confirm_title">Logout confirm</string>
+    <string name="ok">Ok</string>
+    <string name="logout_dialog_body_message">Sure log out?</string>
+    <string name="cancel">No</string>
+    <string name="fab" translatable="false">fab</string>
+    <string name="temp_value" translatable="false">" %d°C\""</string>
+    <string name="title_power_data">%s kWt*H</string>
+    <string name="contact_locked_message">Contact is locked</string>
+    <string name="contact_unlocked_message">Contact is unlocked</string>
+    <string name="message_alert_disabled">Alert is disabled</string>
+    <string name="message_alert_enabled">Alert enabled</string>
+    <string name="message_enabling_alert">Defence will be enabled</string>
+    <string name="message_disabling_alert">Defence will be disabled</string>
+    <string name="waiting_dialog_title">Please, wait</string>
+    <string name="loading_dialog_message">data is loading</string>
+    <string name="spend_for_month_title">Spend for month:</string>
+    <string name="spend_for_day_title">Spend for day:</string>
+    <string name="accruals_label">Accruals</string>
+    <string name="bills_label">Bills</string>
+    <string name="power_title">Power</string>
+    <string name="membership_title">Membership</string>
+    <string name="target_title">Target</string>
+    <string name="total_duty_title">Total duty</string>
+    <string name="backup_title">Backup</string>
+    <string name="restore_title">Restore</string>
+    <string name="select_backup_folder_pref">select backup folder</string>
+    <string name="select_backup_file_message">select backup file</string>
+    <string name="accruals_power_label">Power accruals</string>
+    <string name="accruals_power_details_label">Power details</string>
+    <string name="start_data_label">Start data</string>
+    <string name="finish_data_label">Finish data</string>
+    <string name="difference_data_label">Used</string>
+    <string name="in_limit_data_label">Used in limit</string>
+    <string name="in_limit_data_cost_label">Limit cost</string>
+    <string name="over_limit_data_label">Over limit</string>
+    <string name="over_limit_data_cost_label">Over limit cost</string>
+    <string name="total_cost_label">Total cost</string>
+    <string name="payed_label">Payed</string>
+    <string name="accruals_membership_label">Accruals membership</string>
+    <string name="fixed_cost_label">Fixed cost</string>
+    <string name="square_cost_label">Square cost</string>
+    <string name="square_label">Square</string>
+    <string name="accruals_membership_details_label">Membership details</string>
+    <string name="accruals_target_details_label">Target details</string>
+    <string name="accruals_target_label">Accruals target</string>
+    <string name="unpayed_bills_title">Unpayed bills</string>
+    <string name="payed_bills_title">Payed bills</string>
+</resources>
