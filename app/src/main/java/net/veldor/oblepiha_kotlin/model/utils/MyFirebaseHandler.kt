@@ -27,7 +27,16 @@ class MyFirebaseHandler {
                             "surprise",
                             "FirebaseHandler getToken 24: save token $token"
                         )
-                       App.instance.preferences.firebaseToken = token
+                        FirebaseMessaging.getInstance().subscribeToTopic("news")
+                            .addOnCompleteListener { result ->
+                                Log.d("surprise", "have firebase topic subscription result")
+                                if (!result.isSuccessful) {
+                                    Log.d("surprise", "can't subscribe:")
+                                } else {
+                                    Log.d("surprise", "i subscribed for themes")
+                                }
+                            }
+                        App.instance.preferences.firebaseToken = token
                     }
                 }
         }

@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.os.Build
 import android.provider.Settings
 import androidx.core.app.NotificationCompat
+import com.google.firebase.messaging.RemoteMessage
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.view.AlarmActivity
@@ -117,6 +118,24 @@ class MyNotify {
                 .setFullScreenIntent(fullScreenPendingIntent, true)
         val incomingCallNotification = notificationBuilder.build()
         mNotificationManager!!.notify(mLastNotificationId, incomingCallNotification)
+        mLastNotificationId++
+    }
+
+    fun showTopicNotification(notification: RemoteMessage.Notification) {
+        val newNotification =
+            NotificationCompat.Builder(App.instance, DEFENCE_STATE_CNANGED_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_sticky_note_2_24)
+                .setContentTitle(notification.title)
+                .setAutoCancel(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setLights(Color.YELLOW, 500, 500)
+                .setChannelId(DEFENCE_STATE_CNANGED_CHANNEL_ID)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setStyle(
+                    NotificationCompat.BigTextStyle().bigText(notification.body)
+                )
+                .build()
+        mNotificationManager!!.notify(mLastNotificationId, newNotification)
         mLastNotificationId++
     }
 

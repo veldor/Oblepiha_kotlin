@@ -18,7 +18,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d("surprise", "MyFirebaseMessagingService onMessageReceived 31: some message received!")
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             val data = remoteMessage.data
@@ -51,11 +50,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
         }
         // Check if message contains a notification payload.
-        if (remoteMessage.notification != null) {
-            Log.d(
-                TAG, "Message Notification Body: " + remoteMessage.notification!!
-                    .body
-            )
+        else if (remoteMessage.notification != null) {
+            App.instance.notifier.showTopicNotification(remoteMessage.notification!!)
         }
     }
 

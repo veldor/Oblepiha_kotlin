@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Oblepiha_kotlin</string>
+    <string name="app_name">СНТ \"Облепиха\"</string>
     <string name="checker_channel_description">Канал проверки состояния</string>
     <string name="defence_state_change_channel_description">Канал проверки защиты</string>
     <string name="alert_received_channel_description">Канал полученных угроз безопасности</string>
@@ -34,7 +34,7 @@
     <string name="ok">Да</string>
     <string name="logout_dialog_body_message">Точно выйти?</string>
     <string name="cancel">Нет</string>
-    <string name="title_power_data">%s кВт*Ч</string>
+    <string name="title_power_data">%s кВт</string>
     <string name="contact_locked_message">Периметр замкнут</string>
     <string name="contact_unlocked_message">Периметр открыт</string>
     <string name="message_alert_disabled">Оповещение выключено</string>
@@ -67,4 +67,26 @@
     <string name="square_cost_label">С сотки</string>
     <string name="square_label">Площадь</string>
     <string name="accruals_membership_details_label">Членские детально</string>
+    <string name="kw_template">%.3f кВт</string>
+    <string name="discount_label">Скидка</string>
+    <string name="to_deposit_label">На депозит</string>
+    <string name="from_deposit_label">С депозита</string>
+    <string name="pays_title">Оплаты</string>
+    <string name="bill_content_title">Состав счёта</string>
+    <string name="created_at_label">Дата выставления</string>
+    <string name="accrued_label">Начислено</string>
+    <string name="bill_details_label">Детали счёта</string>
+    <string name="bill_title">Счёт</string>
+    <string name="bills_list_label">Список счетов</string>
+    <string name="payed_bills_title">Оплаченные счета</string>
+    <string name="unpayed_bills_title">Неоплаченные счета</string>
+    <string name="accruals_target_label">Начисления по целевым</string>
+    <string name="accruals_target_details_label">Детали целевого платежа</string>
+    <string name="ruble_template">%.2f руб.</string>
+    <string name="load_qr_code">QR для оплаты</string>
+    <string name="kw">" кВт"</string>
+    <string name="rub">" руб."</string>
+    <string name="pays_label">Оплаты:</string>
+    <string name="meter">" кв. м."</string>
+    <string name="bill_prefix">Счёт №</string>
 </resources>

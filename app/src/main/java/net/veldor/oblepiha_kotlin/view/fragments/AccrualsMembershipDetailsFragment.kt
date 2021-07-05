@@ -18,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.*
+import net.veldor.oblepiha_kotlin.model.adapters.PaysAdapter
 import net.veldor.oblepiha_kotlin.model.adapters.PowerListAdapter
 import net.veldor.oblepiha_kotlin.model.adapters.PowerListItemsAdapter
 import net.veldor.oblepiha_kotlin.model.data_source.GetPowerListDataSource
@@ -34,6 +35,8 @@ import java.util.concurrent.Executors
 
 class AccrualsMembershipDetailsFragment : Fragment() {
 
+
+    private lateinit var viewModel: AccrualsMembershipDetailsViewModel
     private var _binding: FragmentMembershipDetailsBinding? = null
     private lateinit var root: View
 
@@ -45,10 +48,20 @@ class AccrualsMembershipDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel =
+            ViewModelProvider(this).get(AccrualsMembershipDetailsViewModel::class.java)
         setHasOptionsMenu(true)
         _binding = FragmentMembershipDetailsBinding.inflate(inflater, container, false)
         binding.item = AccrualsMembershipDetailsViewModel.selectedForDetails
         root = binding.root
+        viewModel.requestPays()
+        viewModel.paysInfo.observe(viewLifecycleOwner, {
+            if (it != null) {
+                binding.paysList.layoutManager = LinearLayoutManager(requireContext())
+                binding.paysList.adapter = PaysAdapter(it.list)
+                binding.paysLoader.hideShimmer()
+            }
+        })
         return root
     }
 

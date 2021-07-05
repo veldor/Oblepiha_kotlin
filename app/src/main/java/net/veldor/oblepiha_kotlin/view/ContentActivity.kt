@@ -16,6 +16,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.ActivityContentBinding
 
@@ -47,6 +49,23 @@ class ContentActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        App.instance.connectionError.observe(this, {
+            if(it!!){
+                val snackbar = Snackbar.make(binding.root, "No connection", Snackbar.LENGTH_INDEFINITE)
+                snackbar.setAction("Retry") {
+                    // reload fragment in nav
+                    refreshCurrentFragment()
+                }
+                snackbar.show()
+            }
+        })
+    }
+
+    private fun refreshCurrentFragment(){
+        val id = navController.currentDestination?.id
+        navController.popBackStack(id!!,true)
+        navController.navigate(id)
     }
 
     private fun checkDose() {

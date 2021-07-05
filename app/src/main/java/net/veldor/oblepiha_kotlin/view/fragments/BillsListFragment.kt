@@ -3,44 +3,29 @@ package net.veldor.oblepiha_kotlin.view.fragments
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
-import net.veldor.oblepiha_kotlin.databinding.FragmentAccrualsBinding
-import net.veldor.oblepiha_kotlin.databinding.FragmentPowerBinding
-import net.veldor.oblepiha_kotlin.databinding.FragmentPowerListBinding
-import net.veldor.oblepiha_kotlin.databinding.PowerListItemViewBinding
-import net.veldor.oblepiha_kotlin.model.adapters.PowerListAdapter
-import net.veldor.oblepiha_kotlin.model.adapters.PowerListItemsAdapter
-import net.veldor.oblepiha_kotlin.model.data_source.GetPowerListDataSource
-import net.veldor.oblepiha_kotlin.model.data_source.MyPositionalDataSource
-import net.veldor.oblepiha_kotlin.model.data_source.PowerDataUtilCallback
-import net.veldor.oblepiha_kotlin.model.data_source.PowerListItemDiffCallback
-import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
-import net.veldor.oblepiha_kotlin.model.selections.PowerListItem
-import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerDetailsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.PowerViewModel
+import net.veldor.oblepiha_kotlin.databinding.FragmentBillsListBinding
+import net.veldor.oblepiha_kotlin.model.adapters.BillListItemsAdapter
+import net.veldor.oblepiha_kotlin.model.data_source.BillListItemDiffCallback
+import net.veldor.oblepiha_kotlin.model.data_source.BillsListDataSource
+import net.veldor.oblepiha_kotlin.model.selections.BillListItem
+import net.veldor.oblepiha_kotlin.model.view_models.BillDetailsViewModel
+import net.veldor.oblepiha_kotlin.model.view_models.BillsListViewModel
 import net.veldor.oblepiha_kotlin.view.ContentActivity
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class BillsListFragment : Fragment() {
 
-    private var _binding: FragmentPowerListBinding? = null
+    private var _binding: FragmentBillsListBinding? = null
     private lateinit var root: View
     private lateinit var recyclerView: RecyclerView
 
@@ -53,7 +38,7 @@ class BillsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-        _binding = FragmentPowerListBinding.inflate(inflater, container, false)
+        _binding = FragmentBillsListBinding.inflate(inflater, container, false)
         root = binding.root
 
         handleRecycler()
@@ -66,7 +51,7 @@ class BillsListFragment : Fragment() {
     }
 
     private fun removeObservers() {
-        AccrualsPowerViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
+        BillsListViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
     }
 
     override fun onResume() {
@@ -75,35 +60,40 @@ class BillsListFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        AccrualsPowerViewModel.selectedForDetails.observe(viewLifecycleOwner, {
-            Log.d("surprise", "AccrualsPowerFragment.kt 77: have goto action event $it")
+        BillsListViewModel.selectedForDetails.observe(viewLifecycleOwner, {
             if (it != null) {
-                // show power accrual list
                 val navController = (requireActivity() as ContentActivity).navController
-                if (navController.currentDestination?.id == R.id.navigation_accruals_power) {
-                    AccrualsPowerDetailsViewModel.selectedForDetails = it
-                    navController.navigate(R.id.action_show_power_details)
+                if (navController.currentDestination?.id == R.id.navigation_bills_list) {
+                    BillDetailsViewModel.selectedForDetails = it
+                    navController.navigate(R.id.action_open_bill_details)
                 }
-                AccrualsPowerViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
-                AccrualsPowerViewModel.selectedForDetails.value = null
+                BillsListViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
+                BillsListViewModel.selectedForDetails.value = null
+            }
+        })
+        BillsListViewModel.isLoaded.observe(viewLifecycleOwner, {
+            if(it){
+                BillsListViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+                BillsListViewModel.isLoaded.value = false
+                binding.contentLoadingProgressView.visibility = View.GONE
             }
         })
     }
 
     private fun handleRecycler() {
         // DataSource
-        val dataSource = GetPowerListDataSource()
+        val dataSource = BillsListDataSource()
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(true)
             .setPageSize(5)
             .build()
-        val pageList: PagedList<PowerListItem?> = PagedList.Builder(dataSource, config)
+        val pageList: PagedList<BillListItem?> = PagedList.Builder(dataSource, config)
             .setFetchExecutor(Executors.newSingleThreadExecutor())
             .setNotifyExecutor(MainThreadExecutor())
             .build()
         recyclerView = root.findViewById(R.id.dataList)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = PowerListItemsAdapter(PowerListItemDiffCallback())
+        val adapter = BillListItemsAdapter(BillListItemDiffCallback())
         adapter.submitList(pageList)
         recyclerView.adapter = adapter
     }

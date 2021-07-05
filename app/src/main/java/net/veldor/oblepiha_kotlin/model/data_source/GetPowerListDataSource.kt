@@ -9,6 +9,8 @@ import kotlinx.coroutines.launch
 import net.veldor.oblepiha_kotlin.model.selections.GetPowerDataResponse
 import net.veldor.oblepiha_kotlin.model.selections.PowerListItem
 import net.veldor.oblepiha_kotlin.model.utils.MyConnector
+import net.veldor.oblepiha_kotlin.model.view_models.AccrualsMembershipViewModel
+import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerViewModel
 
 internal class GetPowerListDataSource :
     PositionalDataSource<PowerListItem?>() {
@@ -29,6 +31,7 @@ internal class GetPowerListDataSource :
                     GetPowerDataResponse::class.java
                 )
                 result.modify()
+                AccrualsPowerViewModel.isLoaded.postValue(true)
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)

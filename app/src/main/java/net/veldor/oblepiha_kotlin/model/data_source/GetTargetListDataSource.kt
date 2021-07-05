@@ -8,6 +8,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.veldor.oblepiha_kotlin.model.selections.*
 import net.veldor.oblepiha_kotlin.model.utils.MyConnector
+import net.veldor.oblepiha_kotlin.model.view_models.AccrualsMembershipViewModel
+import net.veldor.oblepiha_kotlin.model.view_models.AccrualsTargetViewModel
 
 internal class GetTargetListDataSource :
     PositionalDataSource<TargetListItem?>() {
@@ -29,6 +31,7 @@ internal class GetTargetListDataSource :
                     GetTargetDataResponse::class.java
                 )
                 result.modify()
+                AccrualsTargetViewModel.isLoaded.postValue(true)
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)

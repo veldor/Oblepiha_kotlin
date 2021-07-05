@@ -18,10 +18,7 @@ import net.veldor.oblepiha_kotlin.model.adapters.MembershipListItemsAdapter
 import net.veldor.oblepiha_kotlin.model.data_source.GetMembershipListDataSource
 import net.veldor.oblepiha_kotlin.model.data_source.MembershipListItemDiffCallback
 import net.veldor.oblepiha_kotlin.model.selections.MembershipListItem
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsMembershipDetailsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsMembershipViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerDetailsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerViewModel
+import net.veldor.oblepiha_kotlin.model.view_models.*
 import net.veldor.oblepiha_kotlin.view.ContentActivity
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -74,6 +71,13 @@ class AccrualsMembershipFragment : Fragment() {
                 }
                 AccrualsMembershipViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
                 AccrualsMembershipViewModel.selectedForDetails.value = null
+            }
+        })
+        AccrualsMembershipViewModel.isLoaded.observe(viewLifecycleOwner, {
+            if(it){
+                AccrualsMembershipViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+                AccrualsMembershipViewModel.isLoaded.value = false
+                binding.contentLoadingProgressView.visibility = View.GONE
             }
         })
     }

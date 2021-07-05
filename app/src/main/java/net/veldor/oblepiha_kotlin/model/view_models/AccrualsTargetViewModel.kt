@@ -8,5 +8,6 @@ import net.veldor.oblepiha_kotlin.model.selections.TargetListItem
 class AccrualsTargetViewModel : ViewModel() {
     companion object{
         val selectedForDetails = MutableLiveData<TargetListItem?>()
+        val isLoaded= MutableLiveData<Boolean>()
     }
 }

@@ -66,6 +66,10 @@ class AccrualsFragment : Fragment() {
             binding.powerDuty.text = GrammarHandler.showPrice(it.powerDuty)
             binding.membershipDuty.text = GrammarHandler.showPrice(it.membershipDuty)
             binding.targetDuty.text = GrammarHandler.showPrice(it.targetDuty)
+            binding.totalDutyLoader.hideShimmer()
+            binding.membershipLoader.hideShimmer()
+            binding.powerLoader.hideShimmer()
+            binding.targetLoader.hideShimmer()
         })
         return root
     }

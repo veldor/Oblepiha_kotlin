@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.veldor.oblepiha_kotlin">
 
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -17,6 +18,7 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
+
 
     <supports-screens
         android:anyDensity="true"
@@ -34,9 +36,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Oblepiha_kotlin">
+        <activity android:name=".view.QrActivity"/>
         <activity
             android:name=".view.ContentActivity"
-            android:label="@string/title_activity_content"/>
+            android:label="@string/title_activity_content" />
         <activity android:name=".view.LoginActivity" />
         <activity
             android:name=".view.AlarmActivity"
@@ -51,6 +54,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".model.utils.MyFirebaseMessagingService"
             android:directBootAware="true"

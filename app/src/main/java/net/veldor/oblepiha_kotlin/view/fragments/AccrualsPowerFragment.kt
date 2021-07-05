@@ -30,10 +30,7 @@ import net.veldor.oblepiha_kotlin.model.data_source.PowerListItemDiffCallback
 import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
 import net.veldor.oblepiha_kotlin.model.selections.PowerListItem
 import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerDetailsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.PowerViewModel
+import net.veldor.oblepiha_kotlin.model.view_models.*
 import net.veldor.oblepiha_kotlin.view.ContentActivity
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -86,6 +83,14 @@ class AccrualsPowerFragment : Fragment() {
                 }
                 AccrualsPowerViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
                 AccrualsPowerViewModel.selectedForDetails.value = null
+            }
+        })
+
+        AccrualsPowerViewModel.isLoaded.observe(viewLifecycleOwner, {
+            if(it){
+                AccrualsPowerViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+                AccrualsPowerViewModel.isLoaded.value = false
+                binding.contentLoadingProgressView.visibility = View.GONE
             }
         })
     }

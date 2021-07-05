@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import androidx.work.*
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
 import net.veldor.oblepiha_kotlin.model.database.AppDatabase
 import net.veldor.oblepiha_kotlin.model.selections.ApiCurrentStatusResponse
 import net.veldor.oblepiha_kotlin.model.utils.MyFirebaseHandler
@@ -16,12 +18,15 @@ import net.veldor.oblepiha_kotlin.model.workers.CheckStatusWorker
 import net.veldor.oblepiha_kotlin.view.AlarmActivity
 import java.util.concurrent.TimeUnit
 
+
 class App : Application() {
     // хранилище статуса HTTP запроса
     val RequestStatus = MutableLiveData<String>()
 
     var mCurrentStatusResponse: MutableLiveData<ApiCurrentStatusResponse> =
         MutableLiveData<ApiCurrentStatusResponse>()
+
+    val connectionError = MutableLiveData<Boolean?>()
 
     var isAlertWindowShowed = false
 
@@ -32,18 +37,14 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d("surprise", "App.kt 40: i start")
+        FirebaseApp.initializeApp(this)
         instance = this
         startMainWorker()
         notifier = MyNotify()
         preferences = MyPreferences()
         if (preferences.firebaseToken == null) {
-            Log.d("surprise", "App onCreate 50: getting token")
             MyFirebaseHandler().token
-        } else {
-            Log.d(
-                "surprise",
-                "App onCreate 54: token is " + preferences.firebaseToken
-            )
         }
         // получаю базу данных
         mDatabase = Room.databaseBuilder(
@@ -74,7 +75,8 @@ class App : Application() {
             .build()
         // запущу рабочего, который периодически будет обновлять данные
         val periodicTask: PeriodicWorkRequest =
-            PeriodicWorkRequest.Builder(CheckStatusWorker::class.java, 15, TimeUnit.MINUTES).setConstraints(constraints)
+            PeriodicWorkRequest.Builder(CheckStatusWorker::class.java, 15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
                 .build()
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "periodic check",

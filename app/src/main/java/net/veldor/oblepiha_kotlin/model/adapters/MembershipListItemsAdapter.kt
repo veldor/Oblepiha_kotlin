@@ -59,7 +59,7 @@ class MembershipListItemsAdapter constructor(diffUtilCallback: DiffUtil.ItemCall
 
                 } else {
                     mBinding.payState.text =
-                        String.format(Locale.ENGLISH, "Оплачено %s", item.payed)
+                        String.format(Locale.ENGLISH, "Оплачено:\n %s", item.payed)
                     mBinding.payState.setTextColor(
                         ResourcesCompat.getColor(
                             App.instance.resources,

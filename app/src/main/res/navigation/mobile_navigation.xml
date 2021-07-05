@@ -77,7 +77,25 @@
         android:id="@+id/navigation_bills"
         android:name="net.veldor.oblepiha_kotlin.view.fragments.BillsFragment"
         android:label="@string/bills_label"
-        tools:layout="@layout/fragment_bills" />
+        tools:layout="@layout/fragment_bills" >
+        <action
+            android:id="@+id/action_show_bills_list"
+            app:destination="@id/navigation_bills_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_bills_list"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.BillsListFragment"
+        android:label="@string/bills_list_label"
+        tools:layout="@layout/fragment_bills_list" >
+        <action
+            android:id="@+id/action_open_bill_details"
+            app:destination="@id/navigation_bill_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_bill_details"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.BillDetailsFragment"
+        android:label="@string/bill_details_label"
+        tools:layout="@layout/fragment_bill_details" />
     <fragment
         android:id="@+id/navigation_preferences"
         android:name="net.veldor.oblepiha_kotlin.view.fragments.PreferencesFragment"

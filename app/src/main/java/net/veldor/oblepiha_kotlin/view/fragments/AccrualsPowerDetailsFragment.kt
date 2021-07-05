@@ -1,41 +1,22 @@
 package net.veldor.oblepiha_kotlin.view.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import net.veldor.oblepiha_kotlin.App
-import net.veldor.oblepiha_kotlin.R
-import net.veldor.oblepiha_kotlin.databinding.*
-import net.veldor.oblepiha_kotlin.model.adapters.PowerListAdapter
-import net.veldor.oblepiha_kotlin.model.adapters.PowerListItemsAdapter
-import net.veldor.oblepiha_kotlin.model.data_source.GetPowerListDataSource
-import net.veldor.oblepiha_kotlin.model.data_source.MyPositionalDataSource
-import net.veldor.oblepiha_kotlin.model.data_source.PowerDataUtilCallback
-import net.veldor.oblepiha_kotlin.model.data_source.PowerListItemDiffCallback
-import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
-import net.veldor.oblepiha_kotlin.model.selections.PowerListItem
-import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
+import net.veldor.oblepiha_kotlin.databinding.FragmentPowerDetailsBinding
+import net.veldor.oblepiha_kotlin.model.adapters.PaysAdapter
 import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerDetailsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.AccrualsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.PowerViewModel
 import net.veldor.oblepiha_kotlin.view.ContentActivity
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class AccrualsPowerDetailsFragment : Fragment() {
 
+    private lateinit var viewModel: AccrualsPowerDetailsViewModel
     private var _binding: FragmentPowerDetailsBinding? = null
     private lateinit var root: View
     // This property is only valid between onCreateView and
@@ -47,9 +28,20 @@ class AccrualsPowerDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
+        viewModel =
+            ViewModelProvider(this).get(AccrualsPowerDetailsViewModel::class.java)
         _binding = FragmentPowerDetailsBinding.inflate(inflater, container, false)
         binding.item = AccrualsPowerDetailsViewModel.selectedForDetails
         root = binding.root
+        viewModel.requestPays()
+        viewModel.paysInfo.observe(viewLifecycleOwner, {
+            if (it != null) {
+                Log.d("surprise", "AccrualsPowerDetailsFragment.kt 38: setup adapter")
+                binding.paysList.layoutManager = LinearLayoutManager(requireContext())
+                binding.paysList.adapter = PaysAdapter(it.list)
+                binding.paysLoader.hideShimmer()
+            }
+        })
         return root
     }
 

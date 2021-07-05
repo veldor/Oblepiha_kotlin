@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.model.selections.*
-import net.veldor.oblepiha_kotlin.view.fragments.AccrualsFragment
+import net.veldor.oblepiha_kotlin.model.view_models.BillsListViewModel
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
@@ -79,6 +79,7 @@ class MyConnector {
             conn.disconnect()
         } catch (e: Exception) {
             Log.d("surprise", "Connector request 30: we have problem " + e.message)
+            App.instance.connectionError.postValue(true)
             e.printStackTrace()
         }
         return responseText
@@ -108,14 +109,8 @@ class MyConnector {
         request.token = App.instance.preferences.token
         val gson = Gson()
         val requestBody = gson.toJson(request)
-        Log.d(
-            "surprise",
-            "Connector setAlertsHandled 115: send accept alert $requestBody"
-        )
         val answer: String = request(requestBody)
-        Log.d("surprise", "Connector setAlertsHandled 117: answer is $answer")
         if (answer.isNotEmpty()) {
-            Log.d("surprise", "Connector alerts handled 118: answer is $answer")
             // если запрос успешно завершён- верну true
             val builder = GsonBuilder()
             val responseGson = builder.create()
@@ -177,6 +172,46 @@ class MyConnector {
 
     fun requestBillState(): String {
         val request = BillStateRequest()
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+
+    fun requestBillsList(requestedStartPosition: Int, requestedLoadSize: Int): String {
+        val request = GetBillsDataRequest()
+        request.limit = requestedLoadSize
+        request.offset = requestedStartPosition
+        request.isPayed = BillsListViewModel.isClosed
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+
+    fun requestBillInfo(id: Int): String {
+        val request = GetBillInfoRequest()
+        request.id = id
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+
+    fun requestPays(period: String, type: String): String {
+        val request = EntityPaysRequest()
+        request.period = period
+        Log.d("surprise", "MyConnector.kt 204: $period")
+        request.type = type
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+
+    fun requestBillQR(billId: String): String {
+        val request = BillQRRequest()
+        request.id = billId
         request.token = App.instance.preferences.token
         val gson = Gson()
         val requestBody = gson.toJson(request)

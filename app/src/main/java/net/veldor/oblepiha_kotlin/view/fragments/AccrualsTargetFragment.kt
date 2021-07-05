@@ -17,6 +17,7 @@ import net.veldor.oblepiha_kotlin.model.adapters.TargetListItemsAdapter
 import net.veldor.oblepiha_kotlin.model.data_source.GetTargetListDataSource
 import net.veldor.oblepiha_kotlin.model.data_source.TargetListItemDiffCallback
 import net.veldor.oblepiha_kotlin.model.selections.TargetListItem
+import net.veldor.oblepiha_kotlin.model.view_models.AccrualsPowerViewModel
 import net.veldor.oblepiha_kotlin.model.view_models.AccrualsTargetDetailsViewModel
 import net.veldor.oblepiha_kotlin.model.view_models.AccrualsTargetViewModel
 import net.veldor.oblepiha_kotlin.view.ContentActivity
@@ -70,6 +71,13 @@ class AccrualsTargetFragment : Fragment() {
                 }
                 AccrualsTargetViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
                 AccrualsTargetViewModel.selectedForDetails.value = null
+            }
+        })
+        AccrualsTargetViewModel.isLoaded.observe(viewLifecycleOwner, {
+            if(it){
+                AccrualsTargetViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+                AccrualsTargetViewModel.isLoaded.value = false
+                binding.contentLoadingProgressView.visibility = View.GONE
             }
         })
     }

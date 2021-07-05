@@ -40,23 +40,10 @@ class RawDataHandler(private val mRawData: String) {
         val dData = data.toString().toDouble() / 3200
         val fullData = initial_value.toDouble() + dData
         val df = DecimalFormat("#.000")
-        return df.format(fullData)
+        return df.format(fullData).replace(",", ".")
     }
 
     init {
         packetType = mRawData.substring(0, 2).toInt()
-        if (packetType == 1) {
-            Log.d(
-                "surprise",
-                "RawDataHandler RawDataHandler 40: " + intFromHex(
-                    revertHex(
-                        mRawData.substring(
-                            6,
-                            14
-                        )
-                    )
-                )
-            )
-        }
     }
 }

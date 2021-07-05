@@ -15,17 +15,18 @@ import net.veldor.oblepiha_kotlin.model.utils.MyConnector
 
 class BillsViewModel : ViewModel() {
     fun updateInfo() {
-        viewModelScope.launch (Dispatchers.IO ){
+        viewModelScope.launch(Dispatchers.IO) {
             val connector = MyConnector()
             val responseText: String = connector.requestBillState()
-            Log.d("surprise", "BillsViewModel.kt 19: $responseText")
-            val builder = GsonBuilder()
-            val gson: Gson = builder.create()
-            val response: BillsStateResponse = gson.fromJson(
-                responseText,
-                BillsStateResponse::class.java
-            )
-            state.postValue(response)
+            if (responseText.isNotEmpty()) {
+                val builder = GsonBuilder()
+                val gson: Gson = builder.create()
+                val response: BillsStateResponse = gson.fromJson(
+                    responseText,
+                    BillsStateResponse::class.java
+                )
+                state.postValue(response)
+            }
         }
     }
 

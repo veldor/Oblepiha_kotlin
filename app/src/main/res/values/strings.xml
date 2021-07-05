@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Oblepiha_kotlin</string>
+    <string name="app_name">Oblepiha SNT</string>
     <string name="checker_channel_description">Checker channel</string>
     <string name="defence_state_change_channel_description">Defence state channel</string>
     <string name="alert_received_channel_description">Received alerts</string>
@@ -28,7 +28,7 @@
     <string name="disable_dose_dialog_message">For correct app use, please, disable dose mode</string>
     <string name="logout_btn">Logout button</string>
     <string name="logout_confirm_title">Logout confirm</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="logout_dialog_body_message">Sure log out?</string>
     <string name="cancel">No</string>
     <string name="fab" translatable="false">fab</string>
@@ -64,7 +64,7 @@
     <string name="over_limit_data_label">Over limit</string>
     <string name="over_limit_data_cost_label">Over limit cost</string>
     <string name="total_cost_label">Total cost</string>
-    <string name="payed_label">Payed</string>
+    <string name="payed_label">Paid</string>
     <string name="accruals_membership_label">Accruals membership</string>
     <string name="fixed_cost_label">Fixed cost</string>
     <string name="square_cost_label">Square cost</string>
@@ -73,5 +73,25 @@
     <string name="accruals_target_details_label">Target details</string>
     <string name="accruals_target_label">Accruals target</string>
     <string name="unpayed_bills_title">Unpayed bills</string>
-    <string name="payed_bills_title">Payed bills</string>
+    <string name="payed_bills_title">Paid bills</string>
+    <string name="bills_list_label">Bills list</string>
+    <string name="bill_title">Bill</string>
+    <string name="bill_details_label">Bill details</string>
+    <string name="accrued_label">Accrued</string>
+    <string name="created_at_label">Created at</string>
+    <string name="bill_content_title">Bill content</string>
+    <string name="pays_title">Pays for bill</string>
+    <string name="from_deposit_label">From deposit</string>
+    <string name="to_deposit_label">To deposit</string>
+    <string name="discount_label">Discount</string>
+    <string name="kw_template">%.3f kWt</string>
+    <string name="ruble_template">%.2f rub</string>
+    <string name="load_qr_code">load QR code</string>
+    <string name="kw">" kWt"</string>
+    <string name="rub">rub</string>
+    <string name="pays_label">Pays:</string>
+    <string name="meter">" m."</string>
+    <string name="bill_prefix">"Bill "</string>
+    <string name="depisit_incerase_title">Deposit +%s</string>
+    <string name="deposit_decreese_titile">Deposit -%s</string>
 </resources>

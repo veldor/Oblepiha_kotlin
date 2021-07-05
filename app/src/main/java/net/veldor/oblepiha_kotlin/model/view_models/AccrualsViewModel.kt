@@ -35,7 +35,6 @@ class AccrualsViewModel : ViewModel() {
             }
         }
     }
-
     private val _status = MutableLiveData<AccrualsStatusResponse>()
     val status: LiveData<AccrualsStatusResponse> = _status
 }

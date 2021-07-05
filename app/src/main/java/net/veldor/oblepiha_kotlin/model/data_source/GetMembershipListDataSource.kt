@@ -7,10 +7,9 @@ import com.google.gson.GsonBuilder
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.veldor.oblepiha_kotlin.model.selections.GetMembershipDataResponse
-import net.veldor.oblepiha_kotlin.model.selections.GetPowerDataResponse
 import net.veldor.oblepiha_kotlin.model.selections.MembershipListItem
-import net.veldor.oblepiha_kotlin.model.selections.PowerListItem
 import net.veldor.oblepiha_kotlin.model.utils.MyConnector
+import net.veldor.oblepiha_kotlin.model.view_models.AccrualsMembershipViewModel
 
 internal class GetMembershipListDataSource :
     PositionalDataSource<MembershipListItem?>() {
@@ -32,6 +31,7 @@ internal class GetMembershipListDataSource :
                     GetMembershipDataResponse::class.java
                 )
                 result.modify()
+                AccrualsMembershipViewModel.isLoaded.postValue(true)
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)
