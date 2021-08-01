@@ -11,15 +11,20 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import net.veldor.oblepiha_kotlin.model.database.AppDatabase
 import net.veldor.oblepiha_kotlin.model.selections.ApiCurrentStatusResponse
+import net.veldor.oblepiha_kotlin.model.selections.SuburbanSchedule
 import net.veldor.oblepiha_kotlin.model.utils.MyFirebaseHandler
 import net.veldor.oblepiha_kotlin.model.utils.MyNotify
 import net.veldor.oblepiha_kotlin.model.utils.MyPreferences
 import net.veldor.oblepiha_kotlin.model.workers.CheckStatusWorker
+import net.veldor.oblepiha_kotlin.model.workers.SuburbanLoadWorker
 import net.veldor.oblepiha_kotlin.view.AlarmActivity
 import java.util.concurrent.TimeUnit
 
 
 class App : Application() {
+    val incomingSuburbans: MutableLiveData<SuburbanSchedule> = MutableLiveData()
+    val outgoingSuburbans: MutableLiveData<SuburbanSchedule> = MutableLiveData()
+
     // хранилище статуса HTTP запроса
     val RequestStatus = MutableLiveData<String>()
 
@@ -41,6 +46,7 @@ class App : Application() {
         FirebaseApp.initializeApp(this)
         instance = this
         startMainWorker()
+        startSuburbanWorker()
         notifier = MyNotify()
         preferences = MyPreferences()
         if (preferences.firebaseToken == null) {
@@ -51,8 +57,16 @@ class App : Application() {
             applicationContext,
             AppDatabase::class.java, "database"
         )
+            .fallbackToDestructiveMigration()
             .allowMainThreadQueries()
             .build()
+    }
+
+    private fun startSuburbanWorker() {
+        val task = OneTimeWorkRequestBuilder<SuburbanLoadWorker>()
+            .build()
+        WorkManager.getInstance(this)
+            .enqueue(task)
     }
 
     val database: AppDatabase

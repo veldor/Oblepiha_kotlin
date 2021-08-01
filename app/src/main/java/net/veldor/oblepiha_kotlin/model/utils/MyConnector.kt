@@ -1,16 +1,18 @@
 package net.veldor.oblepiha_kotlin.model.utils
 
+import android.os.Build
+import android.os.Environment
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.model.selections.*
+import net.veldor.oblepiha_kotlin.model.view_models.BillDetailsViewModel
 import net.veldor.oblepiha_kotlin.model.view_models.BillsListViewModel
-import java.io.BufferedReader
-import java.io.DataOutputStream
-import java.io.InputStreamReader
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
 class MyConnector {
@@ -83,6 +85,64 @@ class MyConnector {
             e.printStackTrace()
         }
         return responseText
+    }
+
+    @Throws(java.lang.Exception::class)
+    private fun getFileConnection(): HttpURLConnection {
+        val url = URL(FILE_API_ADDRESS)
+        val con = url.openConnection() as HttpURLConnection
+        con.requestMethod = "POST"
+        con.setRequestProperty("Content-Type", "application/json; utf-8")
+        con.setRequestProperty("Accept", "application/json")
+        con.doOutput = true
+        return con
+    }
+    fun getInvoiceRequest(id: String) {
+        val con: HttpURLConnection = getFileConnection()
+        val request = BillInvoiceRequest()
+        request.id = id
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        Log.d("surprise", "getInvoiceRequest: $requestBody")
+        val os = con.outputStream
+        val input: ByteArray = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            requestBody.toByteArray(StandardCharsets.UTF_8)
+        } else {
+            requestBody.toByteArray(charset("utf-8"))
+        }
+        os.write(input, 0, input.size)
+        Log.d("surprise", "getInvoiceRequest: ${con.responseCode}")
+        if (con.responseCode == 200 && con.contentLength > 0) {
+            val newFile = File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                id + ".pdf"
+            )
+            // сохраню данные в файл
+            FileOutputStream(newFile).use { out ->
+                val buffer = ByteArray(1024)
+                val contentLength: Int = con.contentLength
+                var len: Int
+                val inputStream: InputStream = con.inputStream
+                while (inputStream.read(buffer).also { len = it } != -1) {
+                    out.write(buffer, 0, len)
+                }
+                inputStream.close()
+                Log.d("surprise", "getInvoiceRequest: load finished")
+                BillDetailsViewModel.someFileLoadLiveData.postValue(true)
+            }
+        }
+        else if(con.responseCode == 200){
+            val inputAsString = con.inputStream.bufferedReader().use { it.readText() }
+            Log.d("surprise", "getInvoiceRequest: $inputAsString")
+        }
+        else if(con.responseCode == 500){
+            val inputAsString = con.errorStream.bufferedReader().use { it.readText() }
+            Log.d("surprise", "getInvoiceRequest: $inputAsString")
+        }
+        else{
+            Log.d("surprise", "getInvoiceRequest: no answer")
+        }
     }
 
     fun checkModeChanged(): Boolean {
@@ -218,8 +278,23 @@ class MyConnector {
         return request(requestBody)
     }
 
+    fun requestSuburban(): String {
+        val request = SuburbanRequest()
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+
+    fun requestBillInvoice(id: String) {
+        val outputDir: File =
+            App.instance.cacheDir // context being the Activity pointer
+        val outputFile: File = File.createTempFile(id + ".pdf", "", outputDir)
+    }
+
     companion object {
         const val STATUS_SUCCESS = "success"
         private const val API_ADDRESS = "https://oblepiha.site/api"
+        private const val FILE_API_ADDRESS = "https://oblepiha.site/file-api"
     }
 }

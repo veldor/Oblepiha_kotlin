@@ -14,6 +14,7 @@ import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.PowerItemViewBinding
 import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
 import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
+import java.util.*
 
 class PowerListAdapter constructor(diffUtilCallback: DiffUtil.ItemCallback<PowerData>) :
     PagedListAdapter<PowerData, PowerListAdapter.PowerListViewHolder>(diffUtilCallback) {
@@ -35,7 +36,7 @@ class PowerListAdapter constructor(diffUtilCallback: DiffUtil.ItemCallback<Power
         fun bind(item: PowerData?) {
             mBinding.setVariable(BR.item, item!!)
             mBinding.executePendingBindings()
-            mBinding.powerSpend.text = GrammarHandler.convertWatt(((item.data.toDouble() - item.previousData.toDouble()).toString()))
+            mBinding.powerSpend.text = GrammarHandler.convertWatt((String.format(Locale.ENGLISH, "%.3f", item.data.toDouble() - item.previousData.toDouble())))
             mBinding.getDataTime.text = GrammarHandler.timeToString(item.timestamp)
             root.setOnClickListener{
                 Toast.makeText(App.instance, item.data, Toast.LENGTH_SHORT).show()

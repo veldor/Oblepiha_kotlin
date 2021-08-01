@@ -26,6 +26,7 @@ class AlarmActivity : AppCompatActivity() {
     private lateinit var mMyViewModel: AlertViewModel
     private lateinit var mWakeLock: WakeLock
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         mMyViewModel = ViewModelProvider(this).get(AlertViewModel::class.java)
         val win = window

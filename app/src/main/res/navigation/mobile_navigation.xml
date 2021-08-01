@@ -9,7 +9,17 @@
         android:id="@+id/navigation_defence_state"
         android:name="net.veldor.oblepiha_kotlin.view.fragments.DefenceStateFragment"
         android:label="@string/defence_state_label"
-        tools:layout="@layout/fragment_defence" />
+        tools:layout="@layout/fragment_defence" >
+        <action
+            android:id="@+id/action_show_suburbans"
+            app:destination="@id/navigation_sububans" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sububans"
+        android:name="net.veldor.oblepiha_kotlin.view.fragments.SuburbansFragment"
+        android:label="@string/suburbans_label"
+        tools:layout="@layout/fragment_suburbans" />
 
     <fragment
         android:id="@+id/navigation_power_information"

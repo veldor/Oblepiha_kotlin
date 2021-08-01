@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="handler"
             type="net.veldor.oblepiha_kotlin.view.fragments.DefenceStateFragment" />
@@ -18,9 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +31,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
                     tools:context=".view.fragments.DefenceStateFragment">
 
                     <androidx.cardview.widget.CardView
@@ -117,12 +120,53 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/tempCard"
+                        android:id="@+id/dutyCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:padding="10dp"
                         app:layout_constraintTop_toBottomOf="@+id/cottage_card"
+                        tools:layout_editor_absoluteX="10dp">
+
+                        <TextView
+                            android:id="@+id/current_duty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:drawablePadding="5dp"
+                            android:onClick="@{handler::showDuties}"
+                            android:text="@{handler.debt}"
+                            android:textSize="18sp"
+                            app:drawableStartCompat="@drawable/ic_baseline_account_balance_wallet_24" />
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/billsCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:padding="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/dutyCard"
+                        tools:layout_editor_absoluteX="10dp">
+
+                        <TextView
+                            android:id="@+id/openedBills"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:drawablePadding="5dp"
+                            android:onClick="@{handler::showBills}"
+                            android:text="@{handler.openedBillsState}"
+                            android:textSize="18sp"
+                            app:drawableStartCompat="@drawable/ic_baseline_sticky_note_2_24" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/tempCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:padding="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/billsCard"
                         tools:layout_editor_absoluteX="10dp">
 
                         <TextView
@@ -242,22 +286,102 @@
                             app:drawableStartCompat="@drawable/ic_defence_enabled" />
                     </androidx.cardview.widget.CardView>
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/trainToCityContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:onClick="@{handler::showSuburbans}"
+                        android:layout_marginBottom="15dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/defence_state_card">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/toCityTrainLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/suburban_to_city_title"
+                                app:drawableLeftCompat="@drawable/ic_baseline_train_24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/toCityTrainTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/toCityTrainLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/trainFromCityContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{handler::showSuburbans}"
+                        android:layout_margin="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/trainToCityContainer">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/fromCityTrainLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/suburban_from_city_title"
+                                app:drawableLeftCompat="@drawable/ic_baseline_train_24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/fromCityTrainTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/fromCityTrainLabel" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
+                android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="70dp"
                 android:contentDescription="@string/fab"
                 android:src="@drawable/ic_baseline_wait_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp" />
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

@@ -37,6 +37,7 @@ class DefenceViewModel : ViewModel() {
             if (!App.instance.preferences.isUserUnknown) {
                 val connector = MyConnector()
                 val responseText: String = connector.requestCurrentStatus()
+                Log.d("surprise", "checkStatus: " + responseText)
                 if(responseText.isNotEmpty()){
                     // разберу ответ
                     val builder = GsonBuilder()
@@ -63,6 +64,7 @@ class DefenceViewModel : ViewModel() {
                         else{
                             newData.previousData = newData.data
                         }
+                        Log.d("surprise", "checkStatus: ${newData.data}")
                         dao.insert(newData)
                     }
                     App.instance.mCurrentStatusResponse.postValue(response)

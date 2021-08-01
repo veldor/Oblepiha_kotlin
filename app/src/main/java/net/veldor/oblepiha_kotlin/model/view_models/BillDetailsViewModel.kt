@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.model.selections.*
+import net.veldor.oblepiha_kotlin.model.utils.FileHandler
 import net.veldor.oblepiha_kotlin.model.utils.MyConnector
 import net.veldor.oblepiha_kotlin.model.utils.PrefsBackup
 import java.util.*
@@ -35,9 +36,35 @@ class BillDetailsViewModel : ViewModel() {
         }
     }
 
+    fun loadInvoice() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val connector = MyConnector()
+            connector.getInvoiceRequest(selectedForDetails!!.id.toString())
+
+        }
+    }
+
+    fun openInvoice() {
+        FileHandler().openFIle(selectedForDetails!!.id.toString() + ".pdf")
+    }
+
+    fun shareInvoice() {
+        FileHandler().shareFile(selectedForDetails!!.id.toString() + ".pdf")
+    }
+
+    fun downloadFileAgain() {
+        viewModelScope.launch(Dispatchers.IO) {
+            FileHandler().clearFile(selectedForDetails!!.id.toString() + ".pdf")
+            val connector = MyConnector()
+            connector.getInvoiceRequest(selectedForDetails!!.id.toString())
+
+        }
+    }
+
     val billInfo = MutableLiveData<BillDetailsResponse?>()
 
     companion object {
         var selectedForDetails: BillListItem? = null
+        var someFileLoadLiveData: MutableLiveData<Boolean> = MutableLiveData()
     }
 }

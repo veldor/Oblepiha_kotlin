@@ -16,7 +16,6 @@ import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.view.AlarmActivity
 
 class MyNotify {
-    //public static final int CHECKER_NOTIFICATION = 3;
     private val mNotificationManager: NotificationManager?
     private val mContext: App
     private var mLastNotificationId = 100
@@ -56,6 +55,31 @@ class MyNotify {
                 nc.description = mContext.getString(R.string.alert_received_channel_description)
                 nc.enableLights(true)
                 nc.lightColor = Color.RED
+                nc.enableVibration(true)
+                mNotificationManager.createNotificationChannel(nc)
+
+                // Добавлю канал для уведомлений о загружаемых файлах
+                nc = NotificationChannel(
+                    Companion.FILE_LOAD_CHANNEL_ID,
+                    App.instance.getString(R.string.file_load_channel),
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+                nc.description = App.instance.getString(R.string.file_load_channel)
+                nc.enableLights(false)
+                nc.enableVibration(false)
+                nc.setSound(null, null)
+                mNotificationManager.createNotificationChannel(nc)
+                // Добавлю канал для уведомлений о загруженных файлах
+                nc = NotificationChannel(
+                    Companion.FILE_LOADED_CHANNEL_ID,
+                    App.instance.getString(R.string.file_load_channel),
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+
+                nc.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                nc.description = App.instance.getString(R.string.file_load_channel)
+                nc.enableLights(true)
+                nc.lightColor = Color.GREEN
                 nc.enableVibration(true)
                 mNotificationManager.createNotificationChannel(nc)
             }
@@ -139,10 +163,33 @@ class MyNotify {
         mLastNotificationId++
     }
 
+    fun createFileLoadNotification(): Notification {
+        val mDownloadScheduleBuilder: NotificationCompat.Builder = NotificationCompat.Builder(
+            App.instance!!,
+            Companion.FILE_LOAD_CHANNEL_ID
+        )
+            .setSmallIcon(R.drawable.ic_baseline_arrow_downward_24)
+            .setContentTitle(App.instance.getString(R.string.file_loading_title))
+            .setOngoing(true)
+            .setContentText(App.instance.getString(R.string.file_loading_body))
+            .setProgress(0, 0, true)
+            .setAutoCancel(false)
+        return mDownloadScheduleBuilder.build()
+    }
+
+    fun getNextIdentifier(): Int {
+        mLastNotificationId++
+        return mLastNotificationId
+    }
+
     companion object {
         private const val CHECKER_CHANNEL_ID = "checker"
         private const val DEFENCE_STATE_CNANGED_CHANNEL_ID = "congrats"
         private const val ALERT_RECEIVED_CHANNEL_ID = "alert received"
+
+        //public static final int CHECKER_NOTIFICATION = 3;
+        const val FILE_LOAD_CHANNEL_ID = "file load"
+        const val FILE_LOADED_CHANNEL_ID = "file loaded"
     }
 
     init {

@@ -4,7 +4,7 @@
     <string name="checker_channel_description">Канал проверки состояния</string>
     <string name="defence_state_change_channel_description">Канал проверки защиты</string>
     <string name="alert_received_channel_description">Канал полученных угроз безопасности</string>
-    <string name="defence_state_label">Защита</string>
+    <string name="defence_state_label">Общее</string>
     <string name="defence_disabled">Защита неактивна</string>
     <string name="defence_enabled">Защита активна</string>
     <string name="power_state_label">Электроэнергия</string>
@@ -89,4 +89,23 @@
     <string name="pays_label">Оплаты:</string>
     <string name="meter">" кв. м."</string>
     <string name="bill_prefix">Счёт №</string>
+    <string name="suburban_to_city_title">Электричка в город:</string>
+    <string name="suburban_from_city_title">Электричка из города:</string>
+    <string name="depisit_incerase_title">Депозит\\n+%s</string>
+    <string name="deposit_decreese_titile">Депозит\\n-%s</string>
+    <string name="bill_invoice_title">Квитанция по счёту</string>
+    <string name="download_file">Загрузить</string>
+    <string name="menu_btn_title">кнопка меню</string>
+    <string name="re_download_file">Загрузить заново</string>
+    <string name="share_file_menu_item">Поделиться</string>
+    <string name="file_permissons_not_granted">Права не предоставлены</string>
+    <string name="permissions_dialog_negative_answer">Отказать</string>
+    <string name="permissions_dialog_positive_answer">Разрешить</string>
+    <string name="permissions_dialog_title">Необходимы права доступа</string>
+    <string name="suburbans_label">Электрички</string>
+    <string name="file_load_channel">Загрузка файла</string>
+    <string name="file_loading_title">Файл загружается</string>
+    <string name="file_loading_body">Файл скоро загрузится</string>
+    <string name="no_connection_title">Нет соединения с интернетом</string>
+    <string name="retry_title">Повторить</string>
 </resources>

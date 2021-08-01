@@ -4,12 +4,16 @@ import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -19,15 +23,39 @@ import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.FragmentDefenceBinding
 import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
 import net.veldor.oblepiha_kotlin.model.utils.RawDataHandler
+import net.veldor.oblepiha_kotlin.model.utils.SuburbanHandler
 import net.veldor.oblepiha_kotlin.model.view_models.DefenceViewModel
+import net.veldor.oblepiha_kotlin.model.view_models.SuburbansViewModel
+import net.veldor.oblepiha_kotlin.view.ContentActivity
 import java.util.*
 
 class DefenceStateFragment : Fragment() {
+
+    lateinit var mainHandler: Handler
+
+    private val updateTextTask = object : Runnable {
+        override fun run() {
+            Log.d("surprise", "run: tick")
+            var info = App.instance.incomingSuburbans.value
+            if(info != null){
+                val next = SuburbanHandler(info).getNext()
+                binding.fromCityTrainTime.text = next
+            }
+            info = App.instance.outgoingSuburbans.value
+            if(info != null){
+                val next = SuburbanHandler(info).getNext()
+                binding.toCityTrainTime.text = next
+            }
+            mainHandler.postDelayed(this, 60000)
+        }
+    }
 
     var personName = "--"
     var cottageNumber = "--"
     var externalTemperature = "0"
     var powerData = "0"
+    var debt = "0"
+    var openedBillsState = "Счета оплачены"
     var counterLastConnectionTime = "0"
     var counterLastReadTime = "0"
     private var waitingDialog: AlertDialog? = null
@@ -35,7 +63,7 @@ class DefenceStateFragment : Fragment() {
     private lateinit var viewModel: DefenceViewModel
     private var _binding: FragmentDefenceBinding? = null
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    val temperatureContainer: TextView by lazy {
+    private val temperatureContainer: TextView by lazy {
         requireActivity().findViewById(R.id.current_temp)
     }
     private val fab: FloatingActionButton by lazy {
@@ -55,6 +83,9 @@ class DefenceStateFragment : Fragment() {
     }
     private val defenceStateCard: View by lazy {
         requireActivity().findViewById(R.id.defence_state_card)
+    }
+    private val debtText: TextView by lazy {
+        requireActivity().findViewById(R.id.current_duty)
     }
 
     // This property is only valid between onCreateView and
@@ -83,6 +114,7 @@ class DefenceStateFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener {
             viewModel.checkStatus()
         }
+        mainHandler = Handler(Looper.getMainLooper())
         return root
     }
 
@@ -90,6 +122,13 @@ class DefenceStateFragment : Fragment() {
         super.onResume()
         viewModel.checkStatus()
         setupObservers()
+
+        mainHandler.post(updateTextTask)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacks(updateTextTask)
     }
 
     private fun setupObservers() {
@@ -155,6 +194,21 @@ class DefenceStateFragment : Fragment() {
                     GrammarHandler.handleWatt(it.last_data)
                 )
             }
+            // check debt
+            if(it.total_duty > 0){
+                debt = "-" + GrammarHandler.showPrice(it.total_duty)
+                //  change color
+                debtText.setTextColor(ResourcesCompat.getColor(resources, R.color.text_warning, null))
+            }
+            // check bills
+            if(it.opened_bills.toInt() > 0){
+                openedBillsState = "Есть неоплаченные счета"
+                //  change color
+                binding.openedBills.setTextColor(ResourcesCompat.getColor(resources, R.color.text_warning, null))
+            }
+            else{
+                openedBillsState = "Счета оплачены"
+            }
             counterLastConnectionTime = GrammarHandler.timeToString(it.connection_time)
             counterLastReadTime = GrammarHandler.timeToString(it.last_time)
             if (it.perimeter_state.isNotEmpty()) {
@@ -211,6 +265,16 @@ class DefenceStateFragment : Fragment() {
                 hideLoadingDialog()
                 viewModel.statusChangeRequestAccepted.value = false
             }
+        })
+
+        App.instance.incomingSuburbans.observe(this, {
+            val next = SuburbanHandler(it).getNext()
+            binding.fromCityTrainTime.text = next
+        })
+
+        App.instance.outgoingSuburbans.observe(this, {
+            val next = SuburbanHandler(it).getNext()
+            binding.toCityTrainTime.text = next
         })
     }
 
@@ -334,6 +398,41 @@ class DefenceStateFragment : Fragment() {
                 "Время последнего сбора показаний",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    fun showDuties(view: View){
+        // go to duties tab
+        val navController = (requireActivity() as ContentActivity).navController
+        if (navController.currentDestination?.id == R.id.navigation_defence_state) {
+            navController.navigate(R.id.navigation_accruals)
+        }
+    }
+    fun showBills(view: View){
+        // go to duties tab
+        val navController = (requireActivity() as ContentActivity).navController
+        if (navController.currentDestination?.id == R.id.navigation_defence_state) {
+            navController.navigate(R.id.navigation_bills)
+        }
+    }
+
+    fun showSuburbans(view: View){
+        when(view.id){
+            R.id.trainToCityContainer->{
+                val navController = (requireActivity() as ContentActivity).navController
+                if (navController.currentDestination?.id == R.id.navigation_defence_state) {
+                    SuburbansViewModel.destination = "out"
+                    navController.navigate(R.id.action_show_suburbans)
+                }
+            }
+            R.id.trainFromCityContainer->{
+                val navController = (requireActivity() as ContentActivity).navController
+                if (navController.currentDestination?.id == R.id.navigation_defence_state) {
+                    SuburbansViewModel.destination = "in"
+                    navController.navigate(R.id.action_show_suburbans)
+                }
+            }
+
         }
     }
 }

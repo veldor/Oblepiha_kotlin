@@ -17,5 +17,7 @@ class ApiCurrentStatusResponse:Serializable {
     var initial_value: String = ""
     var perimeter_state: String = ""
     var have_defence = 0
+    var total_duty = 0
+    var opened_bills: String = ""
     var channel = 0
 }

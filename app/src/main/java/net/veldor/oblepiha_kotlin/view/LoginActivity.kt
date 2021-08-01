@@ -20,7 +20,6 @@ import net.veldor.oblepiha_kotlin.databinding.ActivityLoginBinding
 import net.veldor.oblepiha_kotlin.model.view_models.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
     private var sb: Snackbar? = null
@@ -28,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     var login = ""
     var password = ""
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         Log.d("surprise", "LoginActivity.kt 29: i am here")
         binding = DataBindingUtil.inflate(

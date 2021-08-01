@@ -11,7 +11,7 @@
     <string name="test_message" translatable="false">test</string>
     <string name="alert_icon_desc" translatable="false">alert icon</string>
     <string name="title_activity_content">MainActivity</string>
-    <string name="defence_state_label">Defence</string>
+    <string name="defence_state_label">Total</string>
     <string name="power_state_label">Power</string>
     <string name="preferences_label">Preferences</string>
     <string name="login_label">Login</string>
@@ -94,4 +94,21 @@
     <string name="bill_prefix">"Bill "</string>
     <string name="depisit_incerase_title">Deposit +%s</string>
     <string name="deposit_decreese_titile">Deposit -%s</string>
+    <string name="suburban_to_city_title">Suburban to city</string>
+    <string name="suburban_from_city_title">Suburban from city</string>
+    <string name="suburbans_label">Suburbans</string>
+    <string name="file_load_channel">File load</string>
+    <string name="file_loading_title">Loading fine</string>
+    <string name="file_loading_body">File will be loaded</string>
+    <string name="permissions_dialog_title">Permissions required</string>
+    <string name="permissions_dialog_positive_answer">Accept</string>
+    <string name="permissions_dialog_negative_answer">Descline</string>
+    <string name="file_permissons_not_granted">Permissions not granded</string>
+    <string name="share_file_menu_item">Share file</string>
+    <string name="re_download_file">Download file again</string>
+    <string name="menu_btn_title">menu btn</string>
+    <string name="download_file">Download</string>
+    <string name="bill_invoice_title">Bill invoice</string>
+    <string name="no_connection_title">No connection</string>
+    <string name="retry_title">Retry</string>
 </resources>
