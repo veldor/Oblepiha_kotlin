@@ -3,9 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable-night/launch_screen.xml" value="0.325" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_baseline_arrow_left.xml" value="0.31203703703703706" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_baseline_lock_open_24.xml" value="0.26666666666666666" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_defence.xml" value="0.3388888888888889" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_defence_disabled.xml" value="0.325" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_defence_enabled.xml" value="0.325" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_used_power.xml" value="0.325" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/launch_screen.xml" value="0.19166666666666668" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/preview.xml" value="0.3388888888888889" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/bill_entity_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/bill_list_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/bill_transactions_item_view.xml" value="0.34270833333333334" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_bill_details.xml" value="0.2563405797101449" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_defence.xml" value="0.27710843373493976" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_power.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_power_details.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_power_list.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_suburbans.xml" value="0.2824074074074074" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/fragment_target_list.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/loading_dialog_layout.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/membership_list_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/open_gates_appwidget.xml" value="0.14666666666666667" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/pays_list_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/power_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/power_list_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/suburban_item_view.xml" value="0.2824074074074074" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/target_list_item_view.xml" value="0.34270833333333334" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/menu/bottom_nav_menu.xml" value="0.34270833333333334" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/xml/open_gates_widget_info.xml" value="0.43385416666666665" />
       </map>
     </option>
   </component>

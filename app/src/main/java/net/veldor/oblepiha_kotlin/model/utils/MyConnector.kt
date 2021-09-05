@@ -277,6 +277,15 @@ class MyConnector {
         val requestBody = gson.toJson(request)
         return request(requestBody)
     }
+    fun requestPowerUse(year: Int, month: Int): String {
+        val request = PowerUseRequest()
+        request.month = month
+        request.year = year
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
 
     fun requestSuburban(): String {
         val request = SuburbanRequest()

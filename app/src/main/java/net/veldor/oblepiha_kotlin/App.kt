@@ -1,8 +1,11 @@
 package net.veldor.oblepiha_kotlin
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
@@ -46,9 +49,19 @@ class App : Application() {
         FirebaseApp.initializeApp(this)
         instance = this
         startMainWorker()
-        startSuburbanWorker()
         notifier = MyNotify()
         preferences = MyPreferences()
+        if(!preferences.isUserUnknown) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val writeResult = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (writeResult == PackageManager.PERMISSION_GRANTED) {
+                    startSuburbanWorker()
+                }
+            }
+            else{
+                startSuburbanWorker()
+            }
+        }
         if (preferences.firebaseToken == null) {
             MyFirebaseHandler().token
         }
@@ -62,7 +75,7 @@ class App : Application() {
             .build()
     }
 
-    private fun startSuburbanWorker() {
+    fun startSuburbanWorker() {
         val task = OneTimeWorkRequestBuilder<SuburbanLoadWorker>()
             .build()
         WorkManager.getInstance(this)

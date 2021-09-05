@@ -41,35 +41,39 @@ class BillListItemsAdapter constructor(diffUtilCallback: DiffUtil.ItemCallback<B
                 mBinding.setVariable(BR.item, item)
                 mBinding.executePendingBindings()
                 mBinding.cost.text = GrammarHandler.showPrice(item.totalSumm.toInt())
-                if (item.toDeposit.toInt() > 0) {
-                    mBinding.depositState.visibility = View.VISIBLE
-                    mBinding.depositState.text = String.format(
-                        App.instance.getString(R.string.depisit_incerase_title),
-                        GrammarHandler.showPrice(item.toDeposit.toInt())
-                    )
-                    mBinding.depositState.setTextColor(
-                        ResourcesCompat.getColor(
-                            App.instance.resources,
-                            R.color.text_success,
-                            null
+                when {
+                    item.toDeposit.toInt() > 0 -> {
+                        mBinding.depositState.visibility = View.VISIBLE
+                        mBinding.depositState.text = String.format(
+                            App.instance.getString(R.string.depisit_incerase_title),
+                            GrammarHandler.showPrice(item.toDeposit.toInt())
                         )
-                    )
-                } else if (item.depositUsed.toInt() > 0) {
-                    mBinding.depositState.visibility = View.VISIBLE
-                    mBinding.depositState.text = String.format(
-                        App.instance.getString(R.string.deposit_decreese_titile),
-                        GrammarHandler.showPrice(item.depositUsed.toInt())
-                    )
-                    mBinding.depositState.setTextColor(
-                        ResourcesCompat.getColor(
-                            App.instance.resources,
-                            R.color.text_warning,
-                            null
+                        mBinding.depositState.setTextColor(
+                            ResourcesCompat.getColor(
+                                App.instance.resources,
+                                R.color.text_success,
+                                null
+                            )
                         )
-                    )
+                    }
+                    item.depositUsed.toInt() > 0 -> {
+                        mBinding.depositState.visibility = View.VISIBLE
+                        mBinding.depositState.text = String.format(
+                            App.instance.getString(R.string.deposit_decreese_titile),
+                            GrammarHandler.showPrice(item.depositUsed.toInt())
+                        )
+                        mBinding.depositState.setTextColor(
+                            ResourcesCompat.getColor(
+                                App.instance.resources,
+                                R.color.text_warning,
+                                null
+                            )
+                        )
 
-                } else {
-                    mBinding.depositState.visibility = View.GONE
+                    }
+                    else -> {
+                        mBinding.depositState.visibility = View.GONE
+                    }
                 }
                 if (item.payedSumm.toInt() + item.depositUsed.toInt() >= item.totalSumm.toInt()) {
                     mBinding.payState.text = "Оплачено"
@@ -81,7 +85,18 @@ class BillListItemsAdapter constructor(diffUtilCallback: DiffUtil.ItemCallback<B
                         )
                     )
 
-                } else {
+                }
+                else if(item.payedSumm.toInt() == 0){
+                    mBinding.payState.text = "Не оплачено"
+                    mBinding.payState.setTextColor(
+                        ResourcesCompat.getColor(
+                            App.instance.resources,
+                            R.color.text_warning,
+                            null
+                        )
+                    )
+                }
+                else {
                     mBinding.payState.text =
                         String.format(
                             Locale.ENGLISH,
@@ -91,7 +106,7 @@ class BillListItemsAdapter constructor(diffUtilCallback: DiffUtil.ItemCallback<B
                     mBinding.payState.setTextColor(
                         ResourcesCompat.getColor(
                             App.instance.resources,
-                            R.color.text_warning,
+                            R.color.teal_200,
                             null
                         )
                     )

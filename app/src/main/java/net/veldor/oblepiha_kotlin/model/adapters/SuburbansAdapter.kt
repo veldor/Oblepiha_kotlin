@@ -2,15 +2,13 @@ package net.veldor.oblepiha_kotlin.model.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.BR
 import net.veldor.oblepiha_kotlin.R
-import net.veldor.oblepiha_kotlin.databinding.BillEntityItemViewBinding
-import net.veldor.oblepiha_kotlin.databinding.PaysListItemViewBinding
 import net.veldor.oblepiha_kotlin.databinding.SuburbanItemViewBinding
-import net.veldor.oblepiha_kotlin.model.selections.BillEntity
-import net.veldor.oblepiha_kotlin.model.selections.PaymentItem
 import net.veldor.oblepiha_kotlin.model.selections.Segment
 import net.veldor.oblepiha_kotlin.model.selections.SuburbanSchedule
 import net.veldor.oblepiha_kotlin.model.utils.SuburbanHandler
@@ -29,6 +27,12 @@ class SuburbansAdapter(private var list: SuburbanSchedule) :
             mBinding.executePendingBindings()
             val text = SuburbanHandler(null).getInfo(get)
             mBinding.fromCityTrainTime.text = text
+            if(text.endsWith("ушла")){
+                mBinding.trainFromCityContainer.setBackgroundColor(ResourcesCompat.getColor(App.instance.resources, R.color.warning_background, null))
+            }
+            else{
+                mBinding.trainFromCityContainer.background = ResourcesCompat.getDrawable(App.instance.resources, R.color.card_background, null)
+            }
         }
     }
 

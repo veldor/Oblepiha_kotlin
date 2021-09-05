@@ -10,6 +10,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +25,14 @@ import com.google.android.material.snackbar.Snackbar
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.ActivityContentBinding
+import net.veldor.oblepiha_kotlin.model.utils.GatesHandler
 
 const val REQUEST_WRITE_READ = 3
+const val REQUEST_CALL = 4
 
 class ContentActivity : AppCompatActivity() {
 
+    private var mConfirmExit: Long = 0
     private lateinit var binding: ActivityContentBinding
     lateinit var navController: NavController
 
@@ -63,9 +68,45 @@ class ContentActivity : AppCompatActivity() {
                     // reload fragment in nav
                     refreshCurrentFragment()
                 }
+                snackbar.anchorView = navView
                 snackbar.show()
             }
         })
+    }
+
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (navController.currentDestination?.id == R.id.navigation_defence_state) {
+                if (mConfirmExit != 0L) {
+                    if (mConfirmExit > System.currentTimeMillis() - 3000) {
+                        // выйду из приложения
+                        Log.d("surprise", "OPDSActivity onKeyDown exit")
+                        // this.finishAffinity();
+                        val startMain = Intent(Intent.ACTION_MAIN)
+                        startMain.addCategory(Intent.CATEGORY_HOME)
+                        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(startMain)
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Нажмите ещё раз для выхода",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        mConfirmExit = System.currentTimeMillis()
+                    }
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Нажмите ещё раз для выхода",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    mConfirmExit = System.currentTimeMillis()
+                }
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun refreshCurrentFragment(){
@@ -120,6 +161,10 @@ class ContentActivity : AppCompatActivity() {
                 }
             }
         }
+        else if(requestCode == REQUEST_CALL){
+            Log.d("surprise", "onActivityResult: permission granted, make a call")
+            GatesHandler().openGates()
+        }
         else{
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -158,4 +203,5 @@ private fun ContentActivity.checkFileAccess() {
             dialogBuilder.create().show()
         }
     }
+
 }

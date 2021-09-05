@@ -111,4 +111,8 @@
     <string name="bill_invoice_title">Bill invoice</string>
     <string name="no_connection_title">No connection</string>
     <string name="retry_title">Retry</string>
+    <string name="go_to_today_btn">this month</string>
+    <string name="arrow_left_cd" translatable="false">previous month</string>
+    <string name="arrow_right_cd" translatable="false">next month</string>
+    <string name="open_gates_title">Open gates</string>
 </resources>

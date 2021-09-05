@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -20,6 +21,7 @@ import net.veldor.oblepiha_kotlin.databinding.ActivityLoginBinding
 import net.veldor.oblepiha_kotlin.model.view_models.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
+    private var mConfirmExit: Long = 0
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
     private var sb: Snackbar? = null
@@ -62,7 +64,8 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Wrong login or password", Toast.LENGTH_LONG).show()
                 } else if (it.status == "success") {
                     // redirect to main window
-                    startActivity(Intent(this, ContentActivity::class.java))
+                    setResult(Activity.RESULT_OK)
+                    finish()
                 }
             }
         })
@@ -117,5 +120,38 @@ class LoginActivity : AppCompatActivity() {
 
     private fun hideLoginInProgress() {
         sb?.dismiss()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (mConfirmExit != 0L) {
+                if (mConfirmExit > System.currentTimeMillis() - 3000) {
+                    // выйду из приложения
+                    Log.d("surprise", "OPDSActivity onKeyDown exit")
+                    // this.finishAffinity();
+                    val startMain = Intent(Intent.ACTION_MAIN)
+                    startMain.addCategory(Intent.CATEGORY_HOME)
+                    startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(startMain)
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Нажмите ещё раз для выхода",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    mConfirmExit = System.currentTimeMillis()
+                }
+            } else {
+                Toast.makeText(
+                    this,
+                    "Нажмите ещё раз для выхода",
+                    Toast.LENGTH_SHORT
+                ).show()
+                mConfirmExit = System.currentTimeMillis()
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

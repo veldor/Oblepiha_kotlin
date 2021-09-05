@@ -35,12 +35,12 @@
     <string name="logout_dialog_body_message">Точно выйти?</string>
     <string name="cancel">Нет</string>
     <string name="title_power_data">%s кВт</string>
-    <string name="contact_locked_message">Периметр замкнут</string>
-    <string name="contact_unlocked_message">Периметр открыт</string>
-    <string name="message_alert_disabled">Оповещение выключено</string>
-    <string name="message_alert_enabled">Оповещение включено</string>
-    <string name="message_enabling_alert">Защита активна</string>
-    <string name="message_disabling_alert">Защита отключена</string>
+    <string name="contact_locked_message">Закрыто</string>
+    <string name="contact_unlocked_message">Открыто</string>
+    <string name="message_alert_disabled">Защита отключена</string>
+    <string name="message_alert_enabled">Защита активна</string>
+    <string name="message_enabling_alert">Отправляю запрос на активацию защиты</string>
+    <string name="message_disabling_alert">Отправляю запрос на отключение защиты</string>
     <string name="waiting_dialog_title">Ожидайте</string>
     <string name="loading_dialog_message">Загружаю данные</string>
     <string name="power_title">Электроэнергия</string>
@@ -91,8 +91,8 @@
     <string name="bill_prefix">Счёт №</string>
     <string name="suburban_to_city_title">Электричка в город:</string>
     <string name="suburban_from_city_title">Электричка из города:</string>
-    <string name="depisit_incerase_title">Депозит\\n+%s</string>
-    <string name="deposit_decreese_titile">Депозит\\n-%s</string>
+    <string name="depisit_incerase_title">Депозит\n+%s</string>
+    <string name="deposit_decreese_titile">Депозит\n-%s</string>
     <string name="bill_invoice_title">Квитанция по счёту</string>
     <string name="download_file">Загрузить</string>
     <string name="menu_btn_title">кнопка меню</string>
@@ -108,4 +108,6 @@
     <string name="file_loading_body">Файл скоро загрузится</string>
     <string name="no_connection_title">Нет соединения с интернетом</string>
     <string name="retry_title">Повторить</string>
+    <string name="go_to_today_btn">Этот месяц</string>
+    <string name="open_gates_title">Открыть ворота</string>
 </resources>

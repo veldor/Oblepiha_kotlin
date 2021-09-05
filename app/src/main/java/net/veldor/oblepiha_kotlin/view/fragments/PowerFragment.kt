@@ -9,25 +9,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import net.veldor.oblepiha_kotlin.App
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.FragmentPowerBinding
 import net.veldor.oblepiha_kotlin.model.adapters.PowerListAdapter
-import net.veldor.oblepiha_kotlin.model.data_source.MyPositionalDataSource
-import net.veldor.oblepiha_kotlin.model.data_source.PowerDataUtilCallback
-import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
 import net.veldor.oblepiha_kotlin.model.view_models.PowerViewModel
 import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class PowerFragment : Fragment() {
 
     private lateinit var viewModel: PowerViewModel
     private var _binding: FragmentPowerBinding? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,38 +36,59 @@ class PowerFragment : Fragment() {
     ): View {
         viewModel =
             ViewModelProvider(this).get(PowerViewModel::class.java)
-
+        viewModel.requestData()
         _binding = FragmentPowerBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        // handle power data
-        // DataSource
-        val dataSource = MyPositionalDataSource(
-            App.instance.database.powerDao()
-        )
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setPageSize(10)
-            .build()
-        val pageList: PagedList<PowerData?> = PagedList.Builder(dataSource, config)
-            .setFetchExecutor(Executors.newSingleThreadExecutor())
-            .setNotifyExecutor(MainThreadExecutor())
-            .build()
 
         recyclerView = root.findViewById(R.id.dataList)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = PowerListAdapter(PowerDataUtilCallback())
-        adapter.submitList(pageList)
+        val adapter = PowerListAdapter(listOf())
         recyclerView.adapter = adapter
 
-        val spendForDay: TextView = binding.spendForDayData
+        val spendForDay: TextView = binding.dayUseText
         viewModel.spendForDay.observe(viewLifecycleOwner, {
             spendForDay.text = it
         })
-        val spendForMonth: TextView = binding.spendForMonthData
+        val spendForMonth: TextView = binding.monthUseText
         viewModel.spendForMonth.observe(viewLifecycleOwner, {
             spendForMonth.text = it
         })
+
+        binding.calendarNextButton.setOnClickListener {
+            viewModel.loadNextMonth()
+        }
+        binding.calendarPrevButton.setOnClickListener {
+            viewModel.loadPrevMonth()
+        }
+        swipeRefreshLayout = binding.swipeLayout
+        // handle refresh layout
+        swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.requestData()
+        }
+        binding.dateDisplayToday.setOnClickListener {
+            viewModel.requestCurrentData()
+        }
+        setupObservers()
         return root
+    }
+
+    private fun setupObservers() {
+        viewModel.month.observe(viewLifecycleOwner, {
+            binding.dateCurrentMonth.text = it
+        })
+        viewModel.year.observe(viewLifecycleOwner, {
+            binding.dateDisplayYear.text = it.toString()
+        })
+        viewModel.list.observe(viewLifecycleOwner, {
+            (recyclerView.adapter as PowerListAdapter).setItems(it)
+            swipeRefreshLayout.isRefreshing = false
+        })
     }
 
 

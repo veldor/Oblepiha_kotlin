@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="handler"
             type="net.veldor.oblepiha_kotlin.view.fragments.DefenceStateFragment" />
@@ -34,11 +33,10 @@
                     android:paddingBottom="20dp"
                     tools:context=".view.fragments.DefenceStateFragment">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/personCard"
+                    <net.veldor.oblepiha_kotlin.components.HeaderCardView
+                        android:id="@+id/header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -49,83 +47,101 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:id="@+id/owner_io"
-                                android:layout_width="0dp"
+                                android:id="@+id/cottageNumberText"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:drawablePadding="5dp"
-                                android:onClick="@{handler::showTooltip}"
-                                android:text="@{handler.personName}"
-                                android:textSize="16sp"
-                                app:drawableStartCompat="@drawable/ic_baseline_person_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/logout_btn"
+                                android:layout_marginTop="30dp"
+                                android:gravity="center"
+                                android:textColor="@color/text_inverted"
+                                android:textSize="30sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <ImageButton
-                                android:id="@+id/logout_btn"
+                            <TextView
+                                android:id="@+id/cottageOwnerText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_marginRight="10dp"
-                                android:background="@null"
-                                android:contentDescription="@string/logout_btn"
-                                android:onClick="@{() -> handler.logout()}"
-                                android:src="@drawable/ic_baseline_close_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:gravity="center"
+                                android:textColor="@color/text_inverted"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/cottageNumberText" />
 
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/notificationCard"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:padding="10dp"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:id="@+id/notifications"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:id="@+id/linearLayout"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp"
-                                android:textSize="18sp"
-                                android:visibility="gone" />
-                        </androidx.cardview.widget.CardView>
-                    </androidx.cardview.widget.CardView>
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                                app:layout_constraintTop_toBottomOf="@+id/cottageOwnerText">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cottage_card"
-                        android:layout_width="match_parent"
+                                <TextView
+                                    android:id="@+id/current_temp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:drawablePadding="5dp"
+                                    android:onClick="@{handler::showTooltip}"
+                                    android:text="@{handler.externalTemperature}"
+                                    android:textColor="@color/text_inverted"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:drawableStartCompat="@drawable/ic_temp_minus" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linearLayout2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/cottageOwnerText">
+
+                                <TextView
+                                    android:id="@+id/current_power_data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:drawablePadding="5dp"
+                                    android:onClick="@{handler::showTooltip}"
+                                    android:text="@{handler.powerData}"
+                                    android:textColor="@color/text_inverted"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:drawableStartCompat="@drawable/ic_used_power" />
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </net.veldor.oblepiha_kotlin.components.HeaderCardView>
+
+                    <Button
+                        android:id="@+id/openGatesBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/personCard"
-                        tools:layout_editor_absoluteX="10dp">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/open_gates_title"
+                        android:onClick="@{handler::openGates}"
+                        app:layout_constraintTop_toBottomOf="@id/header" />
 
-                        <TextView
-                            android:id="@+id/cottage_number"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:onClick="@{handler::showTooltip}"
-                            android:text="@{handler.cottageNumber}"
-                            android:textSize="18sp"
-                            app:drawableStartCompat="@drawable/ic_baseline_home_24" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
+                    <net.veldor.oblepiha_kotlin.components.TransparentCardView
                         android:id="@+id/dutyCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/cottage_card"
+                        app:layout_constraintTop_toBottomOf="@+id/openGatesBtn"
                         tools:layout_editor_absoluteX="10dp">
 
                         <TextView
@@ -138,8 +154,9 @@
                             android:text="@{handler.debt}"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/ic_baseline_account_balance_wallet_24" />
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
+                    </net.veldor.oblepiha_kotlin.components.TransparentCardView>
+
+                    <net.veldor.oblepiha_kotlin.components.TransparentCardView
                         android:id="@+id/billsCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -158,10 +175,11 @@
                             android:text="@{handler.openedBillsState}"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/ic_baseline_sticky_note_2_24" />
-                    </androidx.cardview.widget.CardView>
+                    </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/tempCard"
+
+                    <net.veldor.oblepiha_kotlin.components.TransparentCardView
+                        android:id="@+id/defence_state_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -169,131 +187,48 @@
                         app:layout_constraintTop_toBottomOf="@+id/billsCard"
                         tools:layout_editor_absoluteX="10dp">
 
-                        <TextView
-                            android:id="@+id/current_temp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:onClick="@{handler::showTooltip}"
-                            android:text="@{handler.externalTemperature}"
-                            android:textSize="18sp"
-                            app:drawableStartCompat="@drawable/ic_temp_minus" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/power_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/tempCard"
-                        tools:layout_editor_absoluteX="10dp">
-
-                        <TextView
-                            android:id="@+id/current_power_data"
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:onClick="@{handler::showTooltip}"
-                            android:text="@{handler.powerData}"
-                            android:textSize="18sp"
-                            app:drawableStartCompat="@drawable/ic_used_power" />
-                    </androidx.cardview.widget.CardView>
+                            android:layout_height="wrap_content">
 
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/defence_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:drawablePadding="5dp"
+                                android:enabled="false"
+                                android:textSize="18sp"
+                                app:drawableStartCompat="@drawable/ic_defence_enabled"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/last_data_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/power_card"
-                        tools:layout_editor_absoluteX="10dp">
+                            <TextView
+                                android:id="@+id/contact_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:drawablePadding="5dp"
+                                android:paddingBottom="10dp"
+                                android:textSize="18sp"
+                                app:drawableStartCompat="@drawable/ic_baseline_lock_24"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/defence_state" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-                        <TextView
-                            android:id="@+id/last_counter_connection_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:onClick="@{handler::showTooltip}"
-                            android:text="@{handler.counterLastConnectionTime}"
-                            android:textSize="18sp"
-                            app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/last_connection_time_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/last_data_card"
-                        tools:layout_editor_absoluteX="10dp">
-
-                        <TextView
-                            android:id="@+id/last_connection_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:onClick="@{handler::showTooltip}"
-                            android:text="@{handler.counterLastReadTime}"
-                            android:textSize="18sp"
-                            app:drawableStartCompat="@drawable/ic_baseline_360_24" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/contact_status_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/last_connection_time_card"
-                        tools:layout_editor_absoluteX="10dp">
-
-                        <TextView
-                            android:id="@+id/contact_status"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:textSize="18sp"
-                            app:drawableStartCompat="@drawable/ic_baseline_lock_24" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/defence_state_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:padding="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/contact_status_card"
-                        tools:layout_editor_absoluteX="10dp">
-
-                        <TextView
-                            android:id="@+id/current_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:drawablePadding="5dp"
-                            android:gravity="center_horizontal"
-                            android:textSize="30sp"
-                            android:textStyle="bold|italic"
-                            app:drawableStartCompat="@drawable/ic_defence_enabled" />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
+                    <net.veldor.oblepiha_kotlin.components.TransparentCardView
                         android:id="@+id/trainToCityContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:onClick="@{handler::showSuburbans}"
                         android:layout_marginBottom="15dp"
                         android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{handler::showSuburbans}"
                         android:padding="10dp"
                         app:layout_constraintTop_toBottomOf="@id/defence_state_card">
 
@@ -325,16 +260,16 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/toCityTrainLabel" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
+                    </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-                    <androidx.cardview.widget.CardView
+                    <net.veldor.oblepiha_kotlin.components.TransparentCardView
                         android:id="@+id/trainFromCityContainer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="@{handler::showSuburbans}"
                         android:layout_margin="10dp"
                         android:layout_marginBottom="30dp"
                         android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{handler::showSuburbans}"
                         android:padding="10dp"
                         app:layout_constraintTop_toBottomOf="@id/trainToCityContainer">
 
@@ -365,23 +300,11 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/fromCityTrainLabel" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
+                    </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="70dp"
-                android:contentDescription="@string/fab"
-                android:src="@drawable/ic_baseline_wait_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

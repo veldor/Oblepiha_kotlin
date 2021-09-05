@@ -12,4 +12,8 @@
     <color name="text_warning">#FF5722</color>
     <color name="background">#FFFFFF</color>
     <color name="text">#FF808080</color>
+    <color name="text_inverted">#F1F1F1</color>
+    <color name="card_background">#E6FFFFFF</color>
+    <color name="text_primary">#FFFE900D</color>
+    <color name="warning_background">#75F4511E</color>
 </resources>

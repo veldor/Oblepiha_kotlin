@@ -20,7 +20,7 @@
             android:paddingBottom="70dp"
             tools:context=".view.fragments.PowerFragment">
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/titleContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,9 +45,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/monthContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,9 +72,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/beginDataContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,9 +111,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/beginDataLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/finishDataContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,9 +150,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/finishDataLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/diffDataContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,9 +189,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/diffDataLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/limitDataContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -228,9 +228,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/limitDataLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/limitDataCostContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -267,9 +267,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/limitDataCostLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/overLimitDataContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -306,9 +306,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/overLimitDataLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/overLimitDataCostContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -345,9 +345,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/overLimitDataCostLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/totalCostContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -384,9 +384,9 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/totalCostLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
-            <androidx.cardview.widget.CardView
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
                 android:id="@+id/payedContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -423,7 +423,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/payedLabel" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
             <TextView
                 android:id="@id/payedLabel"

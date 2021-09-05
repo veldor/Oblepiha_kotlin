@@ -1,48 +1,85 @@
 package net.veldor.oblepiha_kotlin.model.view_models
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import net.veldor.oblepiha_kotlin.App
-import net.veldor.oblepiha_kotlin.R
-import java.util.*
+import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import net.veldor.oblepiha_kotlin.model.selections.UsedPowerItem
+import net.veldor.oblepiha_kotlin.model.selections.UsedPowerResponse
+import net.veldor.oblepiha_kotlin.model.utils.MyConnector
+import net.veldor.oblepiha_kotlin.model.utils.TimeHandler
 
 class PowerViewModel : ViewModel() {
-    private val _spendForMonth = MutableLiveData<String>().apply {
-        val dao = App.instance.database.powerDao()
-        val time = Calendar.getInstance()
-        time.set(Calendar.HOUR_OF_DAY, 0)
-        time.set(Calendar.MINUTE, 0)
-        time.set(Calendar.SECOND, 0)
-        time.set(Calendar.MILLISECOND, 0)
-        time.set(Calendar.DAY_OF_MONTH, 1)
-        val values = dao.getFromTimestamp(time.timeInMillis / 1000)
-        var spendValue = 0.0
-        if(values.isNotEmpty()){
-            values.forEach{
-                spendValue += it!!.data.toDouble()- it.previousData.toDouble()
-            }
-        }
-        Log.d("surprise", "PowerViewModel.kt 27: spend $spendValue")
-        value = String.format(Locale.ENGLISH, App.instance.getString(R.string.kw_template), spendValue)
-    }
-    val spendForMonth: LiveData<String> = _spendForMonth
 
-    private val _spendForDay = MutableLiveData<String>().apply {
-        val dao = App.instance.database.powerDao()
-        val time = Calendar.getInstance()
-        time.set(Calendar.HOUR_OF_DAY, 0)
-        time.set(Calendar.MINUTE, 0)
-        time.set(Calendar.SECOND, 0)
-        val values = dao.getFromTimestamp(time.timeInMillis / 1000)
-        var spendValue = 0.0
-        if(values.isNotEmpty()){
-            values.forEach{
-                spendValue += it!!.data.toDouble() - it.previousData.toDouble()
+    private var selectedMonth = TimeHandler().getCurrentMonth()
+    private var selectedYear = TimeHandler().getCurrentYear()
+    var month: MutableLiveData<String> =
+        MutableLiveData(TimeHandler.MONTHS[TimeHandler().getCurrentMonth()])
+    var year: MutableLiveData<Int> = MutableLiveData(TimeHandler().getCurrentYear())
+    var list: MutableLiveData<List<UsedPowerItem>> = MutableLiveData()
+
+    fun requestData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            // request from server
+            val connector = MyConnector()
+            val responseText: String = connector.requestPowerUse(selectedYear, selectedMonth)
+            if(responseText.isNotEmpty()){
+                val builder = GsonBuilder()
+                val gson: Gson = builder.create()
+                val response: UsedPowerResponse = gson.fromJson(
+                    responseText,
+                    UsedPowerResponse::class.java
+                )
+                if(response.status == "success"){
+                    list.postValue(response.usedDataList)
+                    spendForMonth.postValue(response.spendForMonth + " кВт")
+                    spendForDay.postValue(response.spendForDay + " кВт")
+                }
             }
         }
-        value = String.format(Locale.ENGLISH, App.instance.getString(R.string.kw_template), spendValue)
     }
-    val spendForDay: LiveData<String> = _spendForDay
+
+    fun loadNextMonth() {
+        if (selectedMonth == 11) {
+            selectedMonth = 0
+            ++selectedYear
+        } else {
+            ++selectedMonth
+        }
+        month.postValue(TimeHandler.MONTHS[selectedMonth])
+        year.postValue(selectedYear)
+        requestData()
+    }
+
+    fun loadPrevMonth() {
+        if (selectedMonth == 0) {
+            selectedMonth = 11
+            --selectedYear
+        } else {
+            --selectedMonth
+        }
+        month.postValue(TimeHandler.MONTHS[selectedMonth])
+        year.postValue(selectedYear)
+        requestData()
+    }
+
+    fun requestCurrentData() {
+        selectedMonth = TimeHandler().getCurrentMonth()
+        selectedYear = TimeHandler().getCurrentYear()
+        month.postValue(TimeHandler.MONTHS[selectedMonth])
+        year.postValue(selectedYear)
+        requestData()
+    }
+
+    val spendForMonth: MutableLiveData<String> = MutableLiveData()
+
+
+    val spendForDay: MutableLiveData<String> = MutableLiveData()
+
+    init {
+        requestData()
+    }
 }

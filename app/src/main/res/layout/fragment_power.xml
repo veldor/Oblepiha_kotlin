@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragments.PowerFragment">
-
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,77 +21,185 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/spendForMonthContainer"
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
+                android:id="@+id/dateContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/spendForMonthTitle"
-                        android:layout_width="match_parent"
+                    <ImageButton
+                        android:id="@+id/calendar_prev_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/spend_for_month_title"
-                        android:gravity="center"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="40dp"
+                        android:contentDescription="@string/arrow_left_cd"
+                        app:srcCompat="@drawable/ic_baseline_arrow_left"
+                        android:layout_marginRight="40dp" />
 
-                    <TextView
-                        android:id="@+id/spendForMonthData"
-                        android:layout_width="match_parent"
-                        android:textSize="40sp"
+                    <LinearLayout
+                        android:id="@+id/date_display"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/calendar_prev_button"
+                        android:layout_toRightOf="@id/calendar_prev_button"
                         android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@id/spendForMonthTitle" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/spendForDayContainer"
-                android:layout_width="match_parent"
+                        android:orientation="vertical">
+                        <!-- date title -->
+                        <TextView
+                            android:id="@+id/date_display_year"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+                            android:textColor="@color/text"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                        <!-- date title -->
+                        <TextView
+                            android:id="@+id/date_current_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textAppearance="@android:style/TextAppearance.Large"
+                            android:textColor="@color/text"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/date_display_today"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:text="@string/go_to_today_btn"
+                            android:textColor="@color/text"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/calendar_next_button"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="40dp"
+                        android:layout_toEndOf="@id/date_display"
+                        android:contentDescription="@string/arrow_right_cd"
+                        app:srcCompat="@drawable/ic_baseline_arrow_right"
+                        android:layout_marginLeft="40dp"
+                        android:layout_toRightOf="@id/date_display" />
+                </RelativeLayout>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
+
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
+                android:id="@+id/monthUseCard"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/dayUseCard"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spendForMonthContainer">
+                app:layout_constraintTop_toBottomOf="@id/dateContainer">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/spendForDayTitle"
-                        android:layout_width="match_parent"
+                        android:id="@+id/monthTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/spend_for_month_title"
                         android:gravity="center"
-                        android:text="@string/spend_for_day_title"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp" />
 
                     <TextView
-                        android:id="@+id/spendForDayData"
-                        android:layout_width="match_parent"
-                        android:textSize="40sp"
+                        android:id="@+id/monthUseText"
+                        android:layout_width="0dp"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@id/spendForDayTitle" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/monthTitle" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
+
+            <net.veldor.oblepiha_kotlin.components.TransparentCardView
+                android:id="@+id/dayUseCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/monthUseCard"
+                app:layout_constraintTop_toBottomOf="@id/dateContainer">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/dayTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/spend_for_day_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp" />
+
+                    <TextView
+                        android:id="@+id/dayUseText"
+                        android:layout_width="0dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/dayTitle" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dataList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/spendForDayContainer" />
+                app:layout_constraintTop_toBottomOf="@+id/monthUseCard" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,11 +13,8 @@ import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.veldor.oblepiha_kotlin.App
-import net.veldor.oblepiha_kotlin.model.database.dao.PowerDao
-import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
 import net.veldor.oblepiha_kotlin.model.selections.ApiCurrentStatusResponse
 import net.veldor.oblepiha_kotlin.model.utils.MyConnector
-import net.veldor.oblepiha_kotlin.model.utils.RawDataHandler
 import net.veldor.oblepiha_kotlin.model.workers.LogoutWorker
 
 class DefenceViewModel : ViewModel() {
@@ -33,11 +30,11 @@ class DefenceViewModel : ViewModel() {
 
     fun checkStatus() {
         Log.d("surprise", "DefenceViewModel.kt 34: check status")
+        App.instance.startSuburbanWorker()
         viewModelScope.launch (Dispatchers.IO ){
             if (!App.instance.preferences.isUserUnknown) {
                 val connector = MyConnector()
                 val responseText: String = connector.requestCurrentStatus()
-                Log.d("surprise", "checkStatus: " + responseText)
                 if(responseText.isNotEmpty()){
                     // разберу ответ
                     val builder = GsonBuilder()
@@ -46,27 +43,6 @@ class DefenceViewModel : ViewModel() {
                         responseText,
                         ApiCurrentStatusResponse::class.java
                     )
-                    val handler = RawDataHandler(response.raw_data)
-                    val used: String = handler.getUsed(response.channel, response.initial_value)
-                    // save power data to db
-                    val dao: PowerDao = App.instance.database.powerDao()
-                    val newData = PowerData()
-                    newData.data = used
-                    newData.timestamp = response.last_time
-                    // check have no current value in db
-                    val existent: PowerData? = dao.getByTimestamp(newData.timestamp)
-                    if (existent == null) {
-                        // check previous data
-                        val previous = dao.lastRegistered
-                        if(previous != null){
-                            newData.previousData = previous.data
-                        }
-                        else{
-                            newData.previousData = newData.data
-                        }
-                        Log.d("surprise", "checkStatus: ${newData.data}")
-                        dao.insert(newData)
-                    }
                     App.instance.mCurrentStatusResponse.postValue(response)
                     App.instance.preferences.saveLastCheckTime()
                     App.instance.preferences.saveLastResponse(response)

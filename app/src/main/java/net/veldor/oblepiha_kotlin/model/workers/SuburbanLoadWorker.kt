@@ -1,6 +1,9 @@
 package net.veldor.oblepiha_kotlin.model.workers
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.text.format.DateFormat
 import android.util.Log
 import androidx.work.Worker
@@ -20,22 +23,34 @@ class SuburbanLoadWorker(context: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         // request data from server
         if (!App.instance.preferences.isUserUnknown) {
-            // try load previous schedule
-
-            val existentFromSchedule = SuburbanHandler(null).load("from")
-            val existentToSchedule = SuburbanHandler(null).load("to")
-            if(existentFromSchedule != null && existentToSchedule != null){
-                // check actuality
-                val currentTime = Calendar.getInstance()
-                val date = DateFormat.format("yyyy-MM-dd", currentTime).toString()
-                if(existentFromSchedule.date == date && existentToSchedule.date == date){
-                    Log.d("surprise", "doWork: schedule is actual!")
-                    App.instance.incomingSuburbans.postValue(existentFromSchedule)
-                    App.instance.outgoingSuburbans.postValue(existentToSchedule)
-                    return Result.success()
+            var haveAccess = false;
+            // if have access to sd-card
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val writeResult = App.instance.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (writeResult == PackageManager.PERMISSION_GRANTED) {
+                    haveAccess = true
                 }
-                else{
-                    Log.d("surprise", "doWork: reload schedule")
+            }
+            else{
+                haveAccess = true
+            }
+            if(haveAccess){
+                // try load previous schedule
+                val existentFromSchedule = SuburbanHandler(null).load("from")
+                val existentToSchedule = SuburbanHandler(null).load("to")
+                if(existentFromSchedule != null && existentToSchedule != null){
+                    // check actuality
+                    val currentTime = Calendar.getInstance()
+                    val date = DateFormat.format("yyyy-MM-dd", currentTime).toString()
+                    if(existentFromSchedule.date == date && existentToSchedule.date == date){
+                        Log.d("surprise", "doWork: schedule is actual!")
+                        App.instance.incomingSuburbans.postValue(existentFromSchedule)
+                        App.instance.outgoingSuburbans.postValue(existentToSchedule)
+                        return Result.success()
+                    }
+                    else{
+                        Log.d("surprise", "doWork: reload schedule")
+                    }
                 }
             }
             val connector = MyConnector()
@@ -61,8 +76,10 @@ class SuburbanLoadWorker(context: Context, workerParams: WorkerParameters) :
                 fromSegment.date = response.date
                 toSegment.date = response.date
                 // save objects to local storage
-                SuburbanHandler(fromSegment).save("from")
-                SuburbanHandler(toSegment).save("to")
+                if(haveAccess) {
+                    SuburbanHandler(fromSegment).save("from")
+                    SuburbanHandler(toSegment).save("to")
+                }
                 App.instance.incomingSuburbans.postValue(fromSegment)
                 App.instance.outgoingSuburbans.postValue(toSegment)
                 return Result.success()

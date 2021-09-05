@@ -57,7 +57,18 @@ class MembershipListItemsAdapter constructor(diffUtilCallback: DiffUtil.ItemCall
                         )
                     )
 
-                } else {
+                }
+                else if(item.payed.startsWith("0")){
+                    mBinding.payState.text = "Не оплачено"
+                    mBinding.payState.setTextColor(
+                        ResourcesCompat.getColor(
+                            App.instance.resources,
+                            R.color.text_warning,
+                            null
+                        )
+                    )
+                }
+                else {
                     mBinding.payState.text =
                         String.format(Locale.ENGLISH, "Оплачено:\n %s", item.payed)
                     mBinding.payState.setTextColor(
