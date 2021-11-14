@@ -10,15 +10,15 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "net.veldor.oblepiha_kotlin"
         minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 12
-        versionName "1.20"
+        targetSdkVersion 31
+        versionCode 13
+        versionName "1.21"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -77,9 +77,9 @@ dependencies {
     // Paging
     implementation "android.arch.paging:runtime:1.0.1"
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:26.1.0')
-    // preferences
-    implementation 'androidx.preference:preference-ktx:1.1.1'
+        implementation platform('com.google.firebase:firebase-bom:26.1.0')
+        // preferences
+        implementation 'androidx.preference:preference-ktx:1.1.1'
 
     // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies

@@ -12,6 +12,7 @@
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/ic_used_power.xml" value="0.325" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/launch_screen.xml" value="0.19166666666666668" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/drawable/preview.xml" value="0.3388888888888889" />
+        <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/activity_login.xml" value="0.2962962962962963" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/bill_entity_item_view.xml" value="0.34270833333333334" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/bill_list_item_view.xml" value="0.34270833333333334" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/bill_transactions_item_view.xml" value="0.34270833333333334" />
@@ -32,6 +33,12 @@
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/layout/target_list_item_view.xml" value="0.34270833333333334" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/menu/bottom_nav_menu.xml" value="0.34270833333333334" />
         <entry key="..\:/android projects/oblepihaKotlin/app/src/main/res/xml/open_gates_widget_info.xml" value="0.43385416666666665" />
+        <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/activity_content.xml" value="0.34322916666666664" />
+        <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/activity_main.xml" value="0.34322916666666664" />
+        <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/bill_list_item_view.xml" value="0.34270833333333334" />
+        <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/fragment_bills.xml" value="0.34322916666666664" />
+        <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/fragment_membership_details.xml" value="0.34322916666666664" />
+        <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/fragment_power_details.xml" value="0.33794871794871795" />
       </map>
     </option>
   </component>

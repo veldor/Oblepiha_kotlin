@@ -303,7 +303,7 @@ class MyConnector {
 
     companion object {
         const val STATUS_SUCCESS = "success"
-        private const val API_ADDRESS = "https://oblepiha.site/api"
-        private const val FILE_API_ADDRESS = "https://oblepiha.site/file-api"
+        private const val API_ADDRESS = "https://oplepiha.me/api"
+        private const val FILE_API_ADDRESS = "https://oplepiha.me/file-api"
     }
 }
