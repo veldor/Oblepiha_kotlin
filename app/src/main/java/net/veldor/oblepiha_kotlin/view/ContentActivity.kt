@@ -47,6 +47,7 @@ class ContentActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         navController = findNavController(R.id.nav_host_fragment_activity_content)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -61,9 +62,13 @@ class ContentActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        App.instance.connectionError.observe(this, {
-            if(it!!){
-                val snackbar = Snackbar.make(binding.root, getString(R.string.no_connection_title), Snackbar.LENGTH_INDEFINITE)
+        App.instance.connectionError.observe(this) {
+            if (it!!) {
+                val snackbar = Snackbar.make(
+                    binding.root,
+                    getString(R.string.no_connection_title),
+                    Snackbar.LENGTH_INDEFINITE
+                )
                 snackbar.setAction(getString(R.string.retry_title)) {
                     // reload fragment in nav
                     refreshCurrentFragment()
@@ -71,7 +76,22 @@ class ContentActivity : AppCompatActivity() {
                 snackbar.anchorView = navView
                 snackbar.show()
             }
-        })
+        }
+
+        if (intent.hasExtra("type")) {
+            val action = intent.getStringExtra("type")
+            if (action != null) {
+                if (action == "power_data") {
+                    binding.navView.selectedItemId = R.id.navigation_power_information
+                } else if (action == "new_bill" || action == "pay_confirm") {
+                    binding.navView.selectedItemId = R.id.navigation_bills
+                }
+            }
+        }
+        else if(intent.hasExtra("bill_id")){
+            Log.d("surprise", "ContentActivity.kt 92 onCreate have bill id for open")
+            binding.navView.selectedItemId = R.id.navigation_bills
+        }
     }
 
 
@@ -109,9 +129,9 @@ class ContentActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    private fun refreshCurrentFragment(){
+    private fun refreshCurrentFragment() {
         val id = navController.currentDestination?.id
-        navController.popBackStack(id!!,true)
+        navController.popBackStack(id!!, true)
         navController.navigate(id)
     }
 
@@ -160,12 +180,10 @@ class ContentActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-        }
-        else if(requestCode == REQUEST_CALL){
+        } else if (requestCode == REQUEST_CALL) {
             Log.d("surprise", "onActivityResult: permission granted, make a call")
             GatesHandler().openGates()
-        }
-        else{
+        } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }

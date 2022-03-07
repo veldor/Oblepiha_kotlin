@@ -65,6 +65,9 @@ class App : Application() {
         if (preferences.firebaseToken == null) {
             MyFirebaseHandler().token
         }
+        else{
+            Log.d("surprise", "App.kt 69 onCreate firebase token is \n${instance.preferences.firebaseToken}")
+        }
         // получаю базу данных
         mDatabase = Room.databaseBuilder(
             applicationContext,

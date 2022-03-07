@@ -29,7 +29,7 @@ internal class BillsListDataSource :
                     GetBillsDataResponse::class.java
                 )
                 result.modify()
-                BillsListViewModel.isLoaded.postValue(true)
+                BillsListViewModel.isLoaded.postValue(result.list.isEmpty())
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)

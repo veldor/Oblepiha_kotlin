@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.model.selections.AccrualsStatusResponse
 import net.veldor.oblepiha_kotlin.model.selections.ApiCurrentStatusResponse
+import net.veldor.oblepiha_kotlin.model.utils.ApiHandler
 import net.veldor.oblepiha_kotlin.model.utils.MyConnector
 import net.veldor.oblepiha_kotlin.model.utils.PrefsBackup
 import java.util.*
@@ -27,6 +28,12 @@ class PreferencesViewModel : ViewModel() {
     fun restoreBackup(dl: DocumentFile) {
         viewModelScope.launch(Dispatchers.IO) {
             PrefsBackup().restoreBackup(dl)
+        }
+    }
+
+    fun notifyPowerUseShowStateChanged(state: Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            ApiHandler().switchPowerUseState(state)
         }
     }
 

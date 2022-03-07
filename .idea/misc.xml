@@ -39,6 +39,38 @@
         <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/fragment_bills.xml" value="0.34322916666666664" />
         <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/fragment_membership_details.xml" value="0.34322916666666664" />
         <entry key="..\:/delevope/projects/android/oblepihaKotlin/app/src/main/res/layout/fragment_power_details.xml" value="0.33794871794871795" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/broadcast_badge.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/ic_back.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/ic_baseline_error_24.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/ic_baseline_sticky_note_2_24.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1805" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/launch_screen.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/logo_drawable.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/misc_message_badge.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/new_bill_badge.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/notification_badge.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/pay_confirm_badge.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/round_image.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/unread_badge.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/drawable/vecror_logo.xml" value="0.164" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/activity_content.xml" value="0.346875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/activity_messages.xml" value="0.175" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_accruals.xml" value="0.21875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_bills.xml" value="0.175" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_bills_list.xml" value="0.346875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_defence.xml" value="0.2916666666666667" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_membership_list.xml" value="0.346875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_power.xml" value="0.2857142857142857" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_power_details.xml" value="0.34270833333333334" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_power_list.xml" value="0.346875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/fragment_target_list.xml" value="0.346875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/message_item_view.xml" value="0.2857142857142857" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/layout/power_list_item_view.xml" value="0.18857142857142858" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/menu/bottom_nav_menu.xml" value="0.346875" />
+        <entry key="..\:/sync/dev/android/Oblepiha_kotlin/app/src/main/res/menu/messages_menu.xml" value="0.346875" />
       </map>
     </option>
   </component>

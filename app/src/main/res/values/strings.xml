@@ -115,4 +115,25 @@
     <string name="arrow_left_cd" translatable="false">previous month</string>
     <string name="arrow_right_cd" translatable="false">next month</string>
     <string name="open_gates_title">Open gates</string>
+    <string name="server_update_time">Server info update time</string>
+    <string name="update_time_information_label">Update information time: %s</string>
+    <string name="show_data_transfers_message">Show data transfers</string>
+    <string name="spended_electicity_message">Accruals from %s to %s
+Spend: %s
+On sum %s
+Spend for month: %s
+Month sum: %s</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="notification_type_badge">notification_type_badge</string>
+    <string name="close_title">Close</string>
+    <string name="mark_as_read_titile">Mark as read</string>
+    <string name="wrong_request_message">Can\'t do request, try later!</string>
+    <string name="delete_message">Delete</string>
+    <string name="notification_read_message">Read</string>
+    <string name="notification_deleted_message">Deleted</string>
+    <string name="mark_messages_read_menu">Mark all messages as read</string>
+    <string name="show_bill_info_message">Show bill info</string>
+    <string name="show_power_use">Show power use</string>
+    <string name="no_messages_found_message">No messages found</string>
+    <string name="no_data_found_message">No data found</string>
 </resources>

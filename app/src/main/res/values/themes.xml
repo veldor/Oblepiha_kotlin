@@ -25,4 +25,9 @@
         <item name="android:textColorLink">@color/text</item>
         <item name="tint">@color/text</item>
     </style>
+
+    <style name="AppTheme.MainView">
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <!-- для Android 5+ вы можете поменять цвет colorPrimaryDark, чтобы соответствовать цвету windowBackground -->
+    </style>
 </resources>

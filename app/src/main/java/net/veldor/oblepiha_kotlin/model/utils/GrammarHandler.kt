@@ -1,6 +1,7 @@
 package net.veldor.oblepiha_kotlin.model.utils
 
 import android.text.format.DateFormat
+import androidx.core.text.isDigitsOnly
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import java.util.*
@@ -78,5 +79,19 @@ object GrammarHandler {
 
     fun convertWatt(value: String): String {
         return String.format(Locale.ENGLISH, App.instance.getString(R.string.title_power_data), value)
+    }
+
+    fun getBillNumberFromString(message: String): String? {
+         var start = message.indexOf("Счёт №") + 6
+        var number = message.substring(start, message.indexOf(" ", start))
+        if(number.isDigitsOnly()){
+            return number
+        }
+        start = message.indexOf("счёту №") + 7
+        number = message.substring(start, message.indexOf(".", start))
+        if(number.isDigitsOnly()){
+            return number
+        }
+        return null
     }
 }

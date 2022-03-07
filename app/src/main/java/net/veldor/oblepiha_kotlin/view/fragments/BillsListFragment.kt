@@ -60,7 +60,7 @@ class BillsListFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        BillsListViewModel.selectedForDetails.observe(viewLifecycleOwner, {
+        BillsListViewModel.selectedForDetails.observe(viewLifecycleOwner) {
             if (it != null) {
                 val navController = (requireActivity() as ContentActivity).navController
                 if (navController.currentDestination?.id == R.id.navigation_bills_list) {
@@ -70,14 +70,17 @@ class BillsListFragment : Fragment() {
                 BillsListViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
                 BillsListViewModel.selectedForDetails.value = null
             }
-        })
-        BillsListViewModel.isLoaded.observe(viewLifecycleOwner, {
-            if(it){
-                BillsListViewModel.isLoaded.removeObservers(viewLifecycleOwner)
-                BillsListViewModel.isLoaded.value = false
-                binding.contentLoadingProgressView.visibility = View.GONE
+        }
+        BillsListViewModel.isLoaded.observe(viewLifecycleOwner) {
+            BillsListViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+            BillsListViewModel.isLoaded.value = false
+            binding.contentLoadingProgressView.visibility = View.GONE
+            if (it) {
+                binding.noMessagesText.visibility = View.VISIBLE
+            } else {
+                binding.noMessagesText.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun handleRecycler() {

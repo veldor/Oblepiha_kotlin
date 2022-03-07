@@ -55,13 +55,13 @@ class AccrualsMembershipDetailsFragment : Fragment() {
         binding.item = AccrualsMembershipDetailsViewModel.selectedForDetails
         root = binding.root
         viewModel.requestPays()
-        viewModel.paysInfo.observe(viewLifecycleOwner, {
+        viewModel.paysInfo.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.paysList.layoutManager = LinearLayoutManager(requireContext())
                 binding.paysList.adapter = PaysAdapter(it.list)
                 binding.paysLoader.hideShimmer()
             }
-        })
+        }
         return root
     }
 

@@ -61,7 +61,7 @@ class AccrualsTargetFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        AccrualsTargetViewModel.selectedForDetails.observe(viewLifecycleOwner, {
+        AccrualsTargetViewModel.selectedForDetails.observe(viewLifecycleOwner) {
             if (it != null) {
                 // show power accrual list
                 val navController = (requireActivity() as ContentActivity).navController
@@ -72,14 +72,17 @@ class AccrualsTargetFragment : Fragment() {
                 AccrualsTargetViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
                 AccrualsTargetViewModel.selectedForDetails.value = null
             }
-        })
-        AccrualsTargetViewModel.isLoaded.observe(viewLifecycleOwner, {
-            if(it){
-                AccrualsTargetViewModel.isLoaded.removeObservers(viewLifecycleOwner)
-                AccrualsTargetViewModel.isLoaded.value = false
-                binding.contentLoadingProgressView.visibility = View.GONE
+        }
+        AccrualsTargetViewModel.isLoaded.observe(viewLifecycleOwner) {
+            AccrualsTargetViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+            AccrualsTargetViewModel.isLoaded.value = false
+            binding.contentLoadingProgressView.visibility = View.GONE
+            if (it) {
+                binding.noMessagesText.visibility = View.VISIBLE
+            } else {
+                binding.noMessagesText.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun handleRecycler() {

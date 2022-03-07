@@ -21,6 +21,6 @@ import java.util.*
 class AccrualsPowerViewModel : ViewModel() {
     companion object{
         val selectedForDetails = MutableLiveData<PowerListItem?>()
-        val isLoaded= MutableLiveData<Boolean>()
+        val isLoaded= MutableLiveData<Int>()
     }
 }

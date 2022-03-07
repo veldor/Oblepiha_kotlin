@@ -80,7 +80,6 @@ class MyConnector {
             }
             conn.disconnect()
         } catch (e: Exception) {
-            Log.d("surprise", "Connector request 30: we have problem " + e.message)
             App.instance.connectionError.postValue(true)
             e.printStackTrace()
         }
@@ -209,6 +208,15 @@ class MyConnector {
         val requestBody = gson.toJson(request)
         return request(requestBody)
     }
+    fun requestMessagesList(requestedStartPosition: Int, requestedLoadSize: Int): String {
+        val request = GetMessagesRequest()
+        request.limit = requestedLoadSize
+        request.offset = requestedStartPosition
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
 
     fun requestMembershipList(requestedStartPosition: Int, requestedLoadSize: Int): String {
         val request = GetMembershipDataRequest()
@@ -281,6 +289,46 @@ class MyConnector {
         val request = PowerUseRequest()
         request.month = month
         request.year = year
+        request.showTransfers = App.instance.preferences.isShowDataTransfers()
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+    fun requestDeleteNotification(id: Int): String {
+        val request = DeleteNotificationRequest()
+        request.id = id
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+    fun requestDeleteBroadcast(id: String): String {
+        val request = DeleteBroadcastRequest()
+        request.id = id
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+    fun requestNotificationRead(id: Int): String {
+        val request = ReadNotificationRequest()
+        request.id = id
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+    fun requestMarkAllNotificationsRead(): String {
+        val request = MarkAllNotificationsReadRequest()
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+    fun requestBroadcastRead(id: String): String {
+        val request = ReadBroadcastRequest()
+        request.id = id
         request.token = App.instance.preferences.token
         val gson = Gson()
         val requestBody = gson.toJson(request)
@@ -299,6 +347,24 @@ class MyConnector {
         val outputDir: File =
             App.instance.cacheDir // context being the Activity pointer
         val outputFile: File = File.createTempFile(id + ".pdf", "", outputDir)
+    }
+
+    fun setPowerUseShow(value: Boolean): String {
+        val request = PowerUseShowRequest()
+        request.token = App.instance.preferences.token
+        request.state = value.compareTo(true)
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
+    }
+
+    fun requestBill(billId: Int): String {
+        val request = BillRequest()
+        request.id = billId
+        request.token = App.instance.preferences.token
+        val gson = Gson()
+        val requestBody = gson.toJson(request)
+        return request(requestBody)
     }
 
     companion object {

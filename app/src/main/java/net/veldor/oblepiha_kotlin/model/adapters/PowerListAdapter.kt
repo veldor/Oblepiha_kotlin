@@ -24,7 +24,7 @@ class PowerListAdapter(private var list: List<UsedPowerItem>) :
             binded = get
             mBinding.setVariable(BR.item, get)
             mBinding.executePendingBindings()
-            mBinding.powerSpend.text = String.format(Locale.ENGLISH, "%.3f кВт", get.used)
+            mBinding.powerSpend.text = String.format(Locale.ENGLISH, "%.3f кВт(%s р.)", get.used, get.cost)
 
         }
     }

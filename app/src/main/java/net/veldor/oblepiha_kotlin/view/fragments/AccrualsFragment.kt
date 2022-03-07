@@ -1,39 +1,27 @@
 package net.veldor.oblepiha_kotlin.view.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.FragmentAccrualsBinding
-import net.veldor.oblepiha_kotlin.databinding.FragmentPowerBinding
-import net.veldor.oblepiha_kotlin.model.adapters.PowerListAdapter
-import net.veldor.oblepiha_kotlin.model.data_source.MyPositionalDataSource
-import net.veldor.oblepiha_kotlin.model.data_source.PowerDataUtilCallback
-import net.veldor.oblepiha_kotlin.model.database.entity.PowerData
 import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
+import net.veldor.oblepiha_kotlin.model.utils.TimeHandler
 import net.veldor.oblepiha_kotlin.model.view_models.AccrualsViewModel
-import net.veldor.oblepiha_kotlin.model.view_models.PowerViewModel
 import net.veldor.oblepiha_kotlin.view.ContentActivity
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import java.util.*
 
 class AccrualsFragment : Fragment() {
 
     private lateinit var viewModel: AccrualsViewModel
     private var _binding: FragmentAccrualsBinding? = null
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -60,7 +48,13 @@ class AccrualsFragment : Fragment() {
             viewModel.checkStatus()
         }
 
-        viewModel.status.observe(viewLifecycleOwner, {
+        App.instance.connectionError.observe(viewLifecycleOwner) {
+            if(it != null && it){
+                binding.swipeLayout.isRefreshing = false
+            }
+        }
+
+        viewModel.status.observe(viewLifecycleOwner) {
             swipeRefreshLayout.isRefreshing = false
             binding.totalDuty.text = GrammarHandler.showPrice(it.totalDuty)
             binding.powerDuty.text = GrammarHandler.showPrice(it.powerDuty)
@@ -70,7 +64,14 @@ class AccrualsFragment : Fragment() {
             binding.membershipLoader.hideShimmer()
             binding.powerLoader.hideShimmer()
             binding.targetLoader.hideShimmer()
-        })
+        }
+
+        binding.updateTimeNotification.text =
+            String.format(
+                Locale.ENGLISH,
+                getString(R.string.update_time_information_label),
+                TimeHandler().timestampToDatetime(App.instance.preferences.getUpdateInfoTime())
+            )
         return root
     }
 
@@ -84,22 +85,20 @@ class AccrualsFragment : Fragment() {
         _binding = null
     }
 
-    fun showDetails(view: View){
-        if(view.id == R.id.powerContainer){
+    fun showDetails(view: View) {
+        if (view.id == R.id.powerContainer) {
             // show power accrual list
             val navController = (requireActivity() as ContentActivity).navController
             if (navController.currentDestination?.id == R.id.navigation_accruals) {
                 navController.navigate(R.id.action_show_power_accruals)
             }
-        }
-        else if(view.id == R.id.membershipContainer){
+        } else if (view.id == R.id.membershipContainer) {
             // show power accrual list
             val navController = (requireActivity() as ContentActivity).navController
             if (navController.currentDestination?.id == R.id.navigation_accruals) {
                 navController.navigate(R.id.action_show_membership_accruals)
             }
-        }
-        else if(view.id == R.id.targetContainer){
+        } else if (view.id == R.id.targetContainer) {
             // show power accrual list
             val navController = (requireActivity() as ContentActivity).navController
             if (navController.currentDestination?.id == R.id.navigation_accruals) {

@@ -46,9 +46,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="40dp"
+                        android:layout_marginRight="40dp"
                         android:contentDescription="@string/arrow_left_cd"
-                        app:srcCompat="@drawable/ic_baseline_arrow_left"
-                        android:layout_marginRight="40dp" />
+                        app:srcCompat="@drawable/ic_baseline_arrow_left" />
 
                     <LinearLayout
                         android:id="@+id/date_display"
@@ -88,6 +88,7 @@
                             android:text="@string/go_to_today_btn"
                             android:textColor="@color/text"
                             android:textSize="12sp" />
+
                     </LinearLayout>
 
                     <ImageButton
@@ -97,11 +98,11 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
-                        android:layout_toEndOf="@id/date_display"
-                        android:contentDescription="@string/arrow_right_cd"
-                        app:srcCompat="@drawable/ic_baseline_arrow_right"
                         android:layout_marginLeft="40dp"
-                        android:layout_toRightOf="@id/date_display" />
+                        android:layout_toEndOf="@id/date_display"
+                        android:layout_toRightOf="@id/date_display"
+                        android:contentDescription="@string/arrow_right_cd"
+                        app:srcCompat="@drawable/ic_baseline_arrow_right" />
                 </RelativeLayout>
             </net.veldor.oblepiha_kotlin.components.TransparentCardView>
 
@@ -124,23 +125,23 @@
                         android:id="@+id/monthTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="10dp"
-                        android:text="@string/spend_for_month_title"
                         android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingEnd="10dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/spend_for_month_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="10dp" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/monthUseText"
                         android:layout_width="0dp"
-                        android:textColor="@color/text_primary"
-                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -169,22 +170,22 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingStart="20dp"
+                        android:paddingLeft="20dp"
                         android:paddingEnd="10dp"
+                        android:paddingRight="10dp"
                         android:text="@string/spend_for_day_title"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="10dp" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/dayUseText"
                         android:layout_width="0dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_primary"
-                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -197,9 +198,36 @@
                 android:id="@+id/dataList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/showDataTransfersSwitch" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/showDataTransfersSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/show_data_transfers_message"
+                android:textOff="Showed days"
+                android:textOn="Showed data transfers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/monthUseCard" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <TextView
+        android:id="@+id/no_messages_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/no_data_found_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

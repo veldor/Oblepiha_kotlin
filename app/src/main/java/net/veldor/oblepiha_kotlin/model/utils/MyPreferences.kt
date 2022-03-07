@@ -2,12 +2,13 @@ package net.veldor.oblepiha_kotlin.model.utils
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Log
 import com.google.gson.Gson
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.model.selections.ApiCurrentStatusResponse
 
 
-class MyPreferences{
+class MyPreferences {
     val mSharedPreferences: SharedPreferences
     val isUserUnknown: Boolean
         get() = mSharedPreferences.getString(AUTH_TOKEN, null) == null
@@ -39,7 +40,33 @@ class MyPreferences{
     fun saveLastResponse(response: ApiCurrentStatusResponse) {
         val gson = Gson()
         val json = gson.toJson(response)
+        mSharedPreferences.edit().putInt(PREFERENCE_UPDATE_INFO_TIME, response.update_info_time)
+            .apply()
         mSharedPreferences.edit().putString(PREFERENCE_LAST_STATE, json).apply()
+    }
+
+    fun isShowUsedPower(): Boolean {
+        return mSharedPreferences.getBoolean(PREFERENCE_SHOW_USED_POWER, false)
+    }
+
+    fun getUpdateInfoTime(): Int {
+        return mSharedPreferences.getInt(PREFERENCE_UPDATE_INFO_TIME, 0)
+
+    }
+
+    fun setShowUsedPower(state: Boolean) {
+        Log.d("surprise", "MyPreferences.kt 50 setShowUsedPower change used power $state")
+        mSharedPreferences.edit().putBoolean(PREFERENCE_SHOW_USED_POWER, state).apply()
+
+    }
+
+    fun setShowDataTransfers(state: Boolean) {
+        mSharedPreferences.edit().putBoolean(PREFERENCE_SHOW_DATA_TRANSFERS, state).apply()
+
+    }
+
+    fun isShowDataTransfers(): Boolean {
+        return mSharedPreferences.getBoolean(PREFERENCE_SHOW_DATA_TRANSFERS, false)
     }
 
     val lastCheckTime: Long
@@ -51,6 +78,9 @@ class MyPreferences{
         private const val PREFERENCE_FIREBASE_TOKEN = "firebase token"
         private const val PREFERENCE_LAST_CHECK = "last check"
         private const val PREFERENCE_LAST_STATE = "last state"
+        private const val PREFERENCE_SHOW_USED_POWER = "show used power"
+        private const val PREFERENCE_UPDATE_INFO_TIME = "update info time"
+        private const val PREFERENCE_SHOW_DATA_TRANSFERS = "show data tranfers"
     }
 
     init {

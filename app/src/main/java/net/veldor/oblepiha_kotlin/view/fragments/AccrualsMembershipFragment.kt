@@ -60,7 +60,7 @@ class AccrualsMembershipFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        AccrualsMembershipViewModel.selectedForDetails.observe(viewLifecycleOwner, {
+        AccrualsMembershipViewModel.selectedForDetails.observe(viewLifecycleOwner) {
             Log.d("surprise", "AccrualsPowerFragment.kt 77: have goto action event $it")
             if (it != null) {
                 // show power accrual list
@@ -72,14 +72,17 @@ class AccrualsMembershipFragment : Fragment() {
                 AccrualsMembershipViewModel.selectedForDetails.removeObservers(viewLifecycleOwner)
                 AccrualsMembershipViewModel.selectedForDetails.value = null
             }
-        })
-        AccrualsMembershipViewModel.isLoaded.observe(viewLifecycleOwner, {
-            if(it){
-                AccrualsMembershipViewModel.isLoaded.removeObservers(viewLifecycleOwner)
-                AccrualsMembershipViewModel.isLoaded.value = false
-                binding.contentLoadingProgressView.visibility = View.GONE
+        }
+        AccrualsMembershipViewModel.isLoaded.observe(viewLifecycleOwner) {
+            AccrualsMembershipViewModel.isLoaded.removeObservers(viewLifecycleOwner)
+            AccrualsMembershipViewModel.isLoaded.value = false
+            binding.contentLoadingProgressView.visibility = View.GONE
+            if (it) {
+                binding.noMessagesText.visibility = View.VISIBLE
+            } else {
+                binding.noMessagesText.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun handleRecycler() {

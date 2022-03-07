@@ -1,6 +1,7 @@
 package net.veldor.oblepiha_kotlin.view.fragments
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,8 +11,11 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
+import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.model.view_models.PreferencesViewModel
+import net.veldor.oblepiha_kotlin.view.MainActivity
 
 class PreferencesFragment : PreferenceFragmentCompat() {
 
@@ -51,13 +55,13 @@ class PreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
         val rootScreen = preferenceManager.createPreferenceScreen(
-            activity
+            requireContext()
         )
         viewModel =
-            ViewModelProvider(this).get(PreferencesViewModel::class.java)
+            ViewModelProvider(this)[PreferencesViewModel::class.java]
         preferenceScreen = rootScreen
 
-        val backupPref = Preference(activity)
+        val backupPref = Preference(requireContext())
         backupPref.title = getString(R.string.backup_title)
         backupPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // select folder for save
@@ -80,7 +84,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         }
         rootScreen.addPreference(backupPref)
 
-        val restorePref = Preference(activity)
+        val restorePref = Preference(requireContext())
         restorePref.title = getString(R.string.restore_title)
         restorePref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // select folder for save
@@ -103,5 +107,33 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             true
         }
         rootScreen.addPreference(restorePref)
+
+        val notifyPowerUseSwitcher = SwitchPreferenceCompat(requireContext())
+        notifyPowerUseSwitcher.isChecked = App.instance.preferences.isShowUsedPower()
+        notifyPowerUseSwitcher.switchTextOff = "Отчёты о потраченной электроэнергии не отображаются"
+        notifyPowerUseSwitcher.switchTextOn = "Отчёты о потраченной электроэнергии отображаются"
+        notifyPowerUseSwitcher.title = "Отчёты о потраченной электроэнергии"
+        notifyPowerUseSwitcher.setOnPreferenceChangeListener { _, value ->
+            App.instance.preferences.setShowUsedPower(value as Boolean)
+            viewModel.notifyPowerUseShowStateChanged(value)
+            return@setOnPreferenceChangeListener true
+        }
+        rootScreen.addPreference(notifyPowerUseSwitcher)
+        val logoutPreference = Preference(requireContext())
+        logoutPreference.title = "Выйти из учётной записи"
+        logoutPreference.setOnPreferenceClickListener {
+            AlertDialog.Builder(activity)
+                .setTitle("Выход из учётной записи")
+                .setMessage("Выйти из учётной записи? Все данные, сохранённые на устройстве, будут стёрты.")
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton("Выйти") { _, _ ->
+                    // logout
+                    App.instance.preferences.saveToken(null)
+                    startActivity(Intent(context, MainActivity::class.java))
+                }
+                .show()
+            return@setOnPreferenceClickListener true
+        }
+        rootScreen.addPreference(logoutPreference)
     }
 }

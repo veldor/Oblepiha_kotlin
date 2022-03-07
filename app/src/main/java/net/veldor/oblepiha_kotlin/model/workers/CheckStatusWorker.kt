@@ -27,6 +27,7 @@ class CheckStatusWorker(context: Context, workerParams: WorkerParameters) :
                     responseText,
                     ApiCurrentStatusResponse::class.java
                 )
+                App.instance.preferences.setShowUsedPower(response.notify_power_use == 1)
                 // save power data to db
                 val dao: PowerDao = App.instance.database.powerDao()
                 val newData = PowerData()

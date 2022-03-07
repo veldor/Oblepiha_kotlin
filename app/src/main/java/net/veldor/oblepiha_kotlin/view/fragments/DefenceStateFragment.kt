@@ -25,13 +25,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import net.veldor.oblepiha_kotlin.App
 import net.veldor.oblepiha_kotlin.R
 import net.veldor.oblepiha_kotlin.databinding.FragmentDefenceBinding
-import net.veldor.oblepiha_kotlin.model.utils.GatesHandler
-import net.veldor.oblepiha_kotlin.model.utils.GrammarHandler
-import net.veldor.oblepiha_kotlin.model.utils.RawDataHandler
-import net.veldor.oblepiha_kotlin.model.utils.SuburbanHandler
+import net.veldor.oblepiha_kotlin.model.utils.*
 import net.veldor.oblepiha_kotlin.model.view_models.DefenceViewModel
 import net.veldor.oblepiha_kotlin.model.view_models.SuburbansViewModel
 import net.veldor.oblepiha_kotlin.view.ContentActivity
+import net.veldor.oblepiha_kotlin.view.MessagesActivity
 import net.veldor.oblepiha_kotlin.view.REQUEST_CALL
 import java.util.*
 
@@ -96,6 +94,14 @@ class DefenceStateFragment : Fragment() {
             viewModel.checkStatus()
         }
         mainHandler = Handler(Looper.getMainLooper())
+
+        binding.updateTime.setOnClickListener {
+            Toast.makeText(requireContext(), getString(R.string.server_update_time), Toast.LENGTH_SHORT).show()
+        }
+
+        binding.notificationsCard.setOnClickListener {
+            startActivity(Intent(requireContext(), MessagesActivity::class.java))
+        }
         return root
     }
 
@@ -113,7 +119,13 @@ class DefenceStateFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        App.instance.mCurrentStatusResponse.observe(requireActivity(), {
+        App.instance.connectionError.observe(this) {
+            if(it != null && it){
+                binding.swipeLayout.isRefreshing = false
+            }
+        }
+
+        App.instance.mCurrentStatusResponse.observe(requireActivity()) {
             Log.d("surprise", "setupObservers: have state update!")
             swipeRefreshLayout.isRefreshing = false
             // если проверка неудачна и токен не подходит- переброшу на активити логина
@@ -188,6 +200,20 @@ class DefenceStateFragment : Fragment() {
             } else {
                 debt = "Долгов нет"
             }
+            if (it.update_info_time > 0) {
+                binding.updateTime.setText(TimeHandler().timestampToDatetime(it.update_info_time))
+            }
+            if (it.unread_notifications > 9) {
+                binding.notificationsBadge.text = "9+"
+                binding.notificationsBadge.visibility = View.VISIBLE
+            }
+            else if(it.unread_notifications > 0){
+                binding.notificationsBadge.text = it.unread_notifications.toString()
+                binding.notificationsBadge.visibility = View.VISIBLE
+            }
+            else{
+                binding.notificationsBadge.visibility = View.INVISIBLE
+            }
             // check bills
             if (it.opened_bills.toInt() > 0) {
                 openedBillsState = "Есть неоплаченные счета"
@@ -236,15 +262,15 @@ class DefenceStateFragment : Fragment() {
             }
             binding.invalidateAll()
             binding.notifyChange()
-        })
-        viewModel.actionInProgress.observe(requireActivity(), {
+        }
+        viewModel.actionInProgress.observe(requireActivity()) {
             if (it) {
                 showLoadingDialog()
             } else {
                 hideLoadingDialog()
             }
-        })
-        viewModel.statusChangeRequestAccepted.observe(requireActivity(), {
+        }
+        viewModel.statusChangeRequestAccepted.observe(requireActivity()) {
             Log.d(
                 "surprise",
                 "setupObservers: =========================STATE CHANGE REQUEST ACCEPTED================================="
@@ -266,17 +292,17 @@ class DefenceStateFragment : Fragment() {
                 ).show()
                 hideLoadingDialog()
             }
-        })
+        }
 
-        App.instance.incomingSuburbans.observe(this, {
+        App.instance.incomingSuburbans.observe(this) {
             val next = SuburbanHandler(it).getNext()
             binding.fromCityTrainTime.text = next
-        })
+        }
 
-        App.instance.outgoingSuburbans.observe(this, {
+        App.instance.outgoingSuburbans.observe(this) {
             val next = SuburbanHandler(it).getNext()
             binding.toCityTrainTime.text = next
-        })
+        }
     }
 
     private fun setAlertDisabled() {

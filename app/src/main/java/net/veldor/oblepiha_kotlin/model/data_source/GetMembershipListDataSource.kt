@@ -31,7 +31,7 @@ internal class GetMembershipListDataSource :
                     GetMembershipDataResponse::class.java
                 )
                 result.modify()
-                AccrualsMembershipViewModel.isLoaded.postValue(true)
+                AccrualsMembershipViewModel.isLoaded.postValue(result.list.isEmpty())
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)

@@ -18,7 +18,7 @@ internal class GetPowerListDataSource :
         params: LoadInitialParams,
         callback: LoadInitialCallback<PowerListItem?>
     ) {
-        GlobalScope.launch{
+        GlobalScope.launch {
             // request
             val connector = MyConnector()
             val response =
@@ -31,7 +31,7 @@ internal class GetPowerListDataSource :
                     GetPowerDataResponse::class.java
                 )
                 result.modify()
-                AccrualsPowerViewModel.isLoaded.postValue(true)
+                AccrualsPowerViewModel.isLoaded.postValue(result.list.size)
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)

@@ -64,6 +64,7 @@ class BillDetailsViewModel : ViewModel() {
     val billInfo = MutableLiveData<BillDetailsResponse?>()
 
     companion object {
+        var requiredBillId: String? = null
         var selectedForDetails: BillListItem? = null
         var someFileLoadLiveData: MutableLiveData<Boolean> = MutableLiveData()
     }

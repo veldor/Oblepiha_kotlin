@@ -110,4 +110,21 @@
     <string name="retry_title">Повторить</string>
     <string name="go_to_today_btn">Этот месяц</string>
     <string name="open_gates_title">Открыть ворота</string>
+    <string name="server_update_time">Дата обновления данных на сервере</string>
+    <string name="update_time_information_label">Данные актуальны на %s</string>
+    <string name="show_data_transfers_message">Отображать переданные данные</string>
+    <string name="spended_electicity_message">Потребление электроэнергии\nС %s по %s\nПотрачено: %s кВт\nСтоимость: %s р.\nПотрачено за месяц: %s кВт\nСтоимость за месяц: %s р.</string>
+    <string name="notifications_title">Сообщения</string>
+    <string name="notification_type_badge">тип уведомления</string>
+    <string name="close_title">Закрыть</string>
+    <string name="mark_as_read_titile">Прочитано</string>
+    <string name="wrong_request_message">Не удалось выполнить действие: нет интернета. Попробуйте позднее.</string>
+    <string name="delete_message">Удалить</string>
+    <string name="notification_read_message">Отмечено прочитанным</string>
+    <string name="notification_deleted_message">Удалено</string>
+    <string name="mark_messages_read_menu">Отметить все прочитанными</string>
+    <string name="show_bill_info_message">Просмотреть счёт</string>
+    <string name="show_power_use">Просмотр потребления электроэнергии</string>
+    <string name="no_messages_found_message">Нет сообщений</string>
+    <string name="no_data_found_message">Данные не найдены</string>
 </resources>

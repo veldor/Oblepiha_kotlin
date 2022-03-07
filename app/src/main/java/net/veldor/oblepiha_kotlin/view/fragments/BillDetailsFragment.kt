@@ -3,7 +3,6 @@ package net.veldor.oblepiha_kotlin.view.fragments
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -84,23 +83,23 @@ class BillDetailsFragment : Fragment() {
 
         root = binding.root
         viewModel.loadAdditionalBillInfo()
-        BillDetailsViewModel.someFileLoadLiveData.observe(viewLifecycleOwner, {
+        BillDetailsViewModel.someFileLoadLiveData.observe(viewLifecycleOwner) {
             updateInvoiceInfo()
-        })
-        viewModel.billInfo.observe(viewLifecycleOwner, {
+        }
+        viewModel.billInfo.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it.entities.isNotEmpty()) {
                     // load recycler
                     binding.billContentList.layoutManager = LinearLayoutManager(requireContext())
                     binding.billContentList.adapter = BillEntitiesAdapter(it.entities)
                 }
-                if(it.transactions.isNotEmpty()){
+                if (it.transactions.isNotEmpty()) {
                     binding.billPaysList.layoutManager = LinearLayoutManager(requireContext())
                     binding.billPaysList.adapter = BillTransactionsAdapter(it.transactions)
                 }
                 binding.contentLoader.hideShimmer()
             }
-        })
+        }
         binding.loadQrButton.setOnClickListener {
             val intent = Intent(requireContext(), QrActivity::class.java)
             intent.putExtra(QrActivity.BILL_ID, BillDetailsViewModel.selectedForDetails!!.id)

@@ -10,6 +10,7 @@ class ApiCurrentStatusResponse:Serializable {
     var current_status = false
     var temp: String = ""
     var last_time: Long = 0
+    var unread_notifications: Int = 0
     var connection_time: String = ""
     var last_data: String = ""
     var alerts: ArrayList<String>? = null
@@ -18,6 +19,8 @@ class ApiCurrentStatusResponse:Serializable {
     var perimeter_state: String = ""
     var have_defence = 0
     var total_duty = 0
+    var update_info_time = 0
     var opened_bills: String = ""
     var channel = 0
+    var notify_power_use = 0
 }

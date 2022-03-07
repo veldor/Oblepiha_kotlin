@@ -126,6 +126,37 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
             </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/reminderContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="5dp"
+                app:layout_constraintTop_toBottomOf="@id/payedBillsLoader">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/updateTimeNotification"
+                        app:drawableStartCompat="@drawable/ic_baseline_priority_high_24"
+                        android:layout_width="match_parent"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:drawablePadding="10dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/target_title"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

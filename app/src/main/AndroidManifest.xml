@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.veldor.oblepiha_kotlin">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -21,7 +20,6 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -38,7 +36,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Launcher">
-        <activity android:name=".view.QrActivity"/>
+        <activity
+            android:name=".view.MessagesActivity"
+            android:parentActivityName=".view.ContentActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.ContentActivity" />
+        </activity>
+        <activity android:name=".view.QrActivity" />
         <activity
             android:name=".view.ContentActivity"
             android:label="@string/title_activity_content" />
@@ -49,7 +55,8 @@
             android:screenOrientation="sensorPortrait"
             android:showOnLockScreen="true"
             tools:targetApi="jelly_bean_mr1" />
-        <activity android:name=".view.MainActivity"
+        <activity
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,6 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -66,6 +74,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <service
             android:name=".model.utils.MyFirebaseMessagingService"
             android:directBootAware="true"
@@ -77,13 +86,15 @@
         </service>
 
         <receiver android:name=".model.receivers.MiscReceiver" />
-
-        <receiver android:name=".model.receivers.OpenGatesWidgetProvider"
+        <receiver
+            android:name=".model.receivers.OpenGatesWidgetProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/open_gates_widget_info" />
         </receiver>
     </application>

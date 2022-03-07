@@ -31,7 +31,7 @@ internal class GetTargetListDataSource :
                     GetTargetDataResponse::class.java
                 )
                 result.modify()
-                AccrualsTargetViewModel.isLoaded.postValue(true)
+                AccrualsTargetViewModel.isLoaded.postValue(result.list.isEmpty())
                 callback.onResult(result.list, 0, result.count)
             } else {
                 callback.onResult(listOf(), 0)
